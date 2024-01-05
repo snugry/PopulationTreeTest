@@ -69,7 +69,7 @@ namespace PopulationTreeTest
 
         public void SetDeathDateRange(long maxAge, Random rand)
         {
-            long year = rand.NextInt64(BirthDate.Year, maxAge);
+            long year = rand.NextInt64(BirthDate.Year, BirthDate.Year + maxAge + 1);
 
             DeathDate = new LongDateTime(year);
         }

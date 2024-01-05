@@ -48,14 +48,14 @@ namespace PopulationTreeTest
         public List<Person> CreateChildren(Random rand, NameGenerator nameGen, int childRate = 2)
         {
             List<Person> children = new List<Person>();
-            int numChilds = rand.Next(0, childRate);
+            int numChilds = rand.Next(0, childRate + 1);
 
             long startYear = (long)(Adults.Average(x => x.BirthDate.Year) + 20);
             for (int i = 0; i < numChilds; i++)
             {
                 Person p = new Person(nameGen, (Gender)(rand.Next(0, 1)), CommunityName);
-                p.SetBirthDateRange(startYear, startYear + 20, rand);
-                p.SetDeathDateRange(65, rand);
+                p.SetBirthDateRange(startYear, startYear + 30, rand);
+                p.SetDeathDateRange(120, rand);
                 p.Family = this;
 
                 children.Add(p);

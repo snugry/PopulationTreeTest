@@ -12,9 +12,9 @@ Console.WriteLine("Hello, World!");
     Console.WriteLine($"{p.Prename} {p.Surname}- Birthdate:{p.BirthDate}, Death:{p.DeathDate}");
 }*/
 
-Timeline timeline = new Timeline(50, 0);
+Timeline timeline = new Timeline(12, 0);
 
-timeline.CalculateTimeline(30, 2000);
+timeline.CalculateTimeline(20, 2000);
 
 var persons = timeline.GetPersonsFromYear(1500);
 
