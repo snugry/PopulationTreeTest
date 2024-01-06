@@ -19,7 +19,7 @@ namespace PopulationTreeTest
         {
             Adults = new Person[] { person1, person2 };
 
-            int nameSwitch = rand.Next(0, 2);
+            int nameSwitch = rand.Next(0, 3);
             if(nameSwitch == 0)
             {
                 CommunityName = person1.Surname;
@@ -55,7 +55,7 @@ namespace PopulationTreeTest
             {
                 Person p = new Person(nameGen, (Gender)(rand.Next(0, 1)), CommunityName);
                 p.SetBirthDateRange(startYear, startYear + 30, rand);
-                p.SetDeathDateRange(120, rand);
+                p.SetDeathDateRange(100, rand);
                 p.Family = this;
 
                 children.Add(p);
