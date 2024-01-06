@@ -18,13 +18,13 @@ namespace PopulationTreeTest
 
         private const int _INTERVAL = 1;
 
-        private const int _SEED = 123;
+        private const int _SEED = 564;
 
         private const int _YEAR_RANGE = 10;
 
         private const int _MAX_AGE = 100;
 
-        private const int _CHILD_RATE = 9;
+        private const int _CHILD_RATE = 10;
 
         public Timeline(int startPersons, long startYear = 0)
         {
@@ -68,14 +68,35 @@ namespace PopulationTreeTest
 
         private List<Person> PeopleMovingIn(long year)
         {
-            int movingNum = _rand.Next(0, year < 0 ? 10 : 100);
+            int movingNum;
+            if(year < -5000)
+            {
+                movingNum = _rand.Next(0, 3);
+            }
+            else if (year < 0)
+            {
+                movingNum = _rand.Next(0, 7);
+            }
+            else if(year < 800)
+            {
+                movingNum = _rand.Next(0, 15);
+            }
+            else if (year < 1900)
+            {
+                movingNum = _rand.Next(0, 50);
+            }
+            else
+            {
+                movingNum = _rand.Next(0, 200);
+            }
+
             List<Person> movedPersons = new List<Person>();
 
             for (int i = 0; i < movingNum; i++)
             {
                 Person p = new Person(_nameGenerator, (Gender)(_rand.Next(0, 2)));
                 p.SetBirthDateRange(year -30, year - 15, _rand);
-                p.SetDeathDateRange(_MAX_AGE, _rand);
+                p.SetDeathDateRange(15 + _MAX_AGE, _rand);
 
                 _allPersons.Add(p);
                 movedPersons.Add(p);
