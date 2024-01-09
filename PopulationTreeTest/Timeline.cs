@@ -9,6 +9,7 @@ namespace PopulationTreeTest
     public class Timeline
     {
         private List<Person> _allPersons;
+        private List<Community> _allCommunities;
 
         private Random _rand;
 
@@ -18,7 +19,7 @@ namespace PopulationTreeTest
 
         private const int _INTERVAL = 1;
 
-        private const int _SEED = 564;
+        private const int _SEED = 111;
 
         private const int _YEAR_RANGE = 10;
 
@@ -29,6 +30,7 @@ namespace PopulationTreeTest
         public Timeline(int startPersons, long startYear = 0)
         {
             _allPersons = new List<Person>();
+            _allCommunities = new List<Community>();
             _startYear = startYear;
 
             _rand = new Random(_SEED);
@@ -117,6 +119,7 @@ namespace PopulationTreeTest
 
                 children = comm.CreateChildren(_rand, _nameGenerator, _CHILD_RATE);
                 _allPersons.AddRange(children);
+                _allCommunities.Add(comm);
             }
             return children;
         }
@@ -126,6 +129,13 @@ namespace PopulationTreeTest
             List<Person> availableP = _allPersons.FindAll(x => x.BirthDate.Year < year && x.DeathDate.Year > year);
 
             return availableP;
+        }
+
+        public List<Community> GetCommunitiesFromYear(long year)
+        {
+            List<Community> availableC = _allCommunities.FindAll(x => x.CommunityActive(year));
+
+            return availableC;
         }
     }
 }

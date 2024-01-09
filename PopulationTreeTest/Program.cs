@@ -16,33 +16,13 @@ Timeline timeline = new Timeline(20, 0);
 
 timeline.CalculateTimeline(-10000, 3000);
 
-var persons = timeline.GetPersonsFromYear(-9000);
+for(int i = -10000; i < 3001; i+= 1000)
+{
+    var persons = timeline.GetPersonsFromYear(i);
+    var communities = timeline.GetCommunitiesFromYear(i);
 
-Console.WriteLine($"-9000: {persons.Count} persons");
-
-persons = timeline.GetPersonsFromYear(-5000);
-
-Console.WriteLine($"-5000: {persons.Count} persons");
-
-persons = timeline.GetPersonsFromYear(-1000);
-
-Console.WriteLine($"-1000: {persons.Count} persons");
-
-persons = timeline.GetPersonsFromYear(0);
-
-Console.WriteLine($"0: {persons.Count} persons");
-
-persons = timeline.GetPersonsFromYear(1000);
-
-Console.WriteLine($"1000: {persons.Count} persons");
-
-persons = timeline.GetPersonsFromYear(1990);
-
-Console.WriteLine($"1990: {persons.Count} persons");
-
-persons = timeline.GetPersonsFromYear(2748);
-
-Console.WriteLine($"2748: {persons.Count} persons");
+    Console.WriteLine($"{i}: {persons.Count} persons, {communities.Count} communities");
+}
 
 /*foreach (var p in persons)
 {

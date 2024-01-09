@@ -64,5 +64,14 @@ namespace PopulationTreeTest
             Children = children.ToArray();
             return children;
         }
+
+        public bool CommunityActive(long year)
+        {
+            List<Person> allMembers = new List<Person>();
+            allMembers.AddRange(Adults);
+            allMembers.AddRange(Children);
+
+            return allMembers.Any(x => x.BirthDate.Year < year && x.DeathDate.Year > year);
+        }
     }
 }
