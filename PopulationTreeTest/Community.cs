@@ -13,55 +13,68 @@ namespace PopulationTreeTest
 
         public string CommunityName { get; set; }
 
-        public Person[] Children { get; set; }
+        public List<Person> Children { get; set; }
+
+        public bool Calculated { get; set; } = false;
 
         public Community(Person person1, Person person2, Random rand)
         {
             Adults = new Person[] { person1, person2 };
+            Children = new List<Person>();
 
+            SetCommunityName(rand);
+        }
+
+        private void SetCommunityName(Random rand)
+        {
             int nameSwitch = rand.Next(0, 3);
-            if(nameSwitch == 0)
+            if (nameSwitch == 0)
             {
-                CommunityName = person1.Surname;
+                CommunityName = Adults[0].Surname;
             }
-            else if(nameSwitch == 1)
+            else if (nameSwitch == 1)
             {
-                CommunityName = person2.Surname;
+                CommunityName = Adults[1].Surname;
             }
-            else 
+            else
             {
-                if (person1.Surname.Contains('-'))
+                if (Adults[0].Surname.Contains('-'))
                 {
-                    CommunityName = person2.Surname;
+                    CommunityName = Adults[1].Surname;
                 }
-                else if (person2.Surname.Contains('-'))
+                else if (Adults[1].Surname.Contains('-'))
                 {
-                    CommunityName = person1.Surname;
+                    CommunityName = Adults[0].Surname;
                 }
                 else
                 {
-                    CommunityName = person1.Surname + "-" + person2.Surname;
+                    CommunityName = Adults[0].Surname + "-" + Adults[1].Surname;
                 }
             }
         }
 
-        public List<Person> CreateChildren(Random rand, NameGenerator nameGen, int childRate = 2)
+        public List<Person> CreateChildren(Random rand, NameGenerator nameGen, long year, EarthAgeHelper earthAge)
         {
+            EarthAge age = earthAge.GetEarthAge(year);
             List<Person> children = new List<Person>();
-            int numChilds = rand.Next(0, childRate + 1);
+            if(rand.NextDouble() > age.ChildPropability)
+            {
+                return children;
+            }
+            int numChilds = rand.Next(0, 3);
 
-            long startYear = (long)(Adults.Average(x => x.BirthDate.Year) + 20);
             for (int i = 0; i < numChilds; i++)
             {
                 Person p = new Person(nameGen, (Gender)(rand.Next(0, 1)), CommunityName);
-                p.SetBirthDateRange(startYear, startYear + 30, rand);
+                p.SetBirthDate(year, rand);
                 p.SetDeathDateRange(100, rand);
+                p.SetJob(earthAge, rand);
                 p.Family = this;
 
                 children.Add(p);
             }
 
-            Children = children.ToArray();
+            Children.AddRange(children);
             return children;
         }
 
@@ -71,7 +84,9 @@ namespace PopulationTreeTest
             allMembers.AddRange(Adults);
             allMembers.AddRange(Children);
 
-            return allMembers.Any(x => x.BirthDate.Year < year && x.DeathDate.Year > year);
+            Calculated = Adults[0].GetAge(year) < 50 && Adults[1].GetAge(year) < 50 && 
+                allMembers.Any(x => x.BirthDate.Year < year && x.DeathDate.Year > year);
+            return Calculated;
         }
     }
 }

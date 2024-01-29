@@ -63,8 +63,15 @@ namespace PopulationTreeTest
         public void SetBirthDateRange(long yearFrom, long yearTo, Random rand)
         {
             long year = rand.NextInt64(yearFrom, yearTo);
+            SetBirthDate(year, rand);
+        }
 
-            BirthDate = new LongDateTime(year);
+        public void SetBirthDate(long year, Random rand)
+        {
+            int month = rand.Next(1, 13);
+            int day = rand.Next(1, LongDateTime.GetDaysInMonth(month, year) + 1);
+
+            BirthDate = new LongDateTime(year, month, day);
         }
 
         public void SetDeathDateRange(long maxAge, Random rand)
@@ -85,8 +92,10 @@ namespace PopulationTreeTest
             {            
                 year = rand.NextInt64(BirthDate.Year + maxAge - yearRange, BirthDate.Year + maxAge + 1);
             }
+            int month = rand.Next(1, 13);
+            int day = rand.Next(1, LongDateTime.GetDaysInMonth(month, year) + 1);
 
-            DeathDate = new LongDateTime(year);
+            DeathDate = new LongDateTime(year, month, day);
         }
 
         public int GetAge(long year)
@@ -97,6 +106,12 @@ namespace PopulationTreeTest
                 Died = true;
             }
             return age;
+        }
+
+        public void SetJob(EarthAgeHelper earthAgeHelper, Random rand)
+        {
+            var possibleJobs = earthAgeHelper.GetEarthAge(this.BirthDate.Year).PossibleJobs;
+            this.Job = possibleJobs[rand.Next(0, possibleJobs.Count)];
         }
     }
 }

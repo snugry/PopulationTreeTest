@@ -15,11 +15,13 @@ namespace PopulationTreeTest
 
         private NameGenerator _nameGenerator;
 
+        private EarthAgeHelper _earthAgeHelper;
+
         private long _startYear;
 
         private const int _INTERVAL = 1;
 
-        private const int _SEED = 111;
+        private const int _SEED = 1;
 
         private const int _YEAR_RANGE = 10;
 
@@ -29,6 +31,7 @@ namespace PopulationTreeTest
 
         public Timeline(int startPersons, long startYear = 0)
         {
+            _earthAgeHelper = new EarthAgeHelper();
             _allPersons = new List<Person>();
             _allCommunities = new List<Community>();
             _startYear = startYear;
@@ -41,15 +44,17 @@ namespace PopulationTreeTest
                 Person p = new Person(_nameGenerator, (Gender)(_rand.Next(0, 2)));
                 p.SetBirthDateRange(startYear, _YEAR_RANGE, _rand);
                 p.SetDeathDateRange(_MAX_AGE, _rand);
+                p.SetJob(_earthAgeHelper, _rand);
 
                 _allPersons.Add(p);
-                Console.WriteLine($"{p.Prename} {p.Surname}- Birthdate:{p.BirthDate}, Death:{p.DeathDate}");
+                Console.WriteLine($"{p.Prename} {p.Surname}- Birthdate:{p.BirthDate}, Death:{p.DeathDate}, Job: {p.Job}");
             }
         }
 
         public void CalculateTimeline(long startYear, long endYear)
         {
             List<Person> availableP = _allPersons;
+            List<Community> availableC = _allCommunities;
             for (long i = startYear; i <= endYear; i += _INTERVAL)
             {
                 availableP.AddRange(PeopleMovingIn(i));
@@ -62,43 +67,39 @@ namespace PopulationTreeTest
                 {
                     if(j+1 < availablePersonsTemp.Count)
                     {
-                        availableP.AddRange(CreateFamilyIfPossible(availablePersonsTemp[j], availablePersonsTemp[j+1]));
+                        availableC.AddRange(CreateFamilyIfPossible(availablePersonsTemp[j], availablePersonsTemp[j+1]));
                     }
                 }
+
+                List<Community> availableCommTemp = new List<Community>();
+                foreach (Community comm in availableC.Where(x => !x.Calculated))
+                {
+                    if (comm.CommunityActive(i))
+                    {
+                        availableCommTemp.Add(comm);
+
+                        var children = comm.CreateChildren(_rand, _nameGenerator, i, _earthAgeHelper);
+
+                        _allPersons.AddRange(children);
+                        availableP.AddRange(children);
+                    }
+                }
+                availableC = availableCommTemp;
             }
         }
 
         private List<Person> PeopleMovingIn(long year)
         {
-            int movingNum;
-            if(year < -5000)
-            {
-                movingNum = _rand.Next(0, 3);
-            }
-            else if (year < 0)
-            {
-                movingNum = _rand.Next(0, 7);
-            }
-            else if(year < 800)
-            {
-                movingNum = _rand.Next(0, 15);
-            }
-            else if (year < 1900)
-            {
-                movingNum = _rand.Next(0, 50);
-            }
-            else
-            {
-                movingNum = _rand.Next(0, 200);
-            }
+            int movingNum = _rand.Next(0, _earthAgeHelper.GetImmigrationRate(year));
 
             List<Person> movedPersons = new List<Person>();
 
-            for (int i = 0; i < movingNum; i++)
+            for (int i = 0; i <= movingNum; i++)
             {
                 Person p = new Person(_nameGenerator, (Gender)(_rand.Next(0, 2)));
                 p.SetBirthDateRange(year -30, year - 15, _rand);
                 p.SetDeathDateRange(15 + _MAX_AGE, _rand);
+                p.SetJob(_earthAgeHelper, _rand);
 
                 _allPersons.Add(p);
                 movedPersons.Add(p);
@@ -106,9 +107,8 @@ namespace PopulationTreeTest
             return movedPersons;
         }
 
-        private List<Person> CreateFamilyIfPossible(Person p1, Person p2)
+        private List<Community> CreateFamilyIfPossible(Person p1, Person p2)
         {
-            List<Person> children = new List<Person>();
             if ((p1.Family == null || p2.Family == null || p1.Family != p2.Family) && (p1.Gender != p2.Gender))
             {
                 p1.Partner = p2;
@@ -117,11 +117,10 @@ namespace PopulationTreeTest
                 p1.Family = comm;
                 p2.Family = comm;
 
-                children = comm.CreateChildren(_rand, _nameGenerator, _CHILD_RATE);
-                _allPersons.AddRange(children);
                 _allCommunities.Add(comm);
+                return new List<Community> { comm};
             }
-            return children;
+            return new List<Community>();
         }
 
         public List<Person> GetPersonsFromYear(long year)
