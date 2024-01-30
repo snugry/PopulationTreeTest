@@ -33,31 +33,27 @@ namespace PopulationTreeTest
         public Gender Gender { get; private set; }
 
         public Person(NameGenerator nameGenerator, Gender gender) {
-            if (gender == Gender.female)
-            {
-                Prename = nameGenerator.GeneratePrenameW();
-            }
-            else
-            {
-                Prename = nameGenerator.GeneratePrenameM();
-            }
+            Prename = nameGenerator.GeneratePrename(gender);
             Gender = gender;
-            
             Surname = nameGenerator.GenerateSurname();
         }
 
         public Person(NameGenerator nameGenerator, Gender gender, string surname)
         {
-            if (gender == Gender.female)
-            {
-                Prename = nameGenerator.GeneratePrenameW();
-            }
-            else
-            {
-                Prename = nameGenerator.GeneratePrenameM();
-            }
+            Prename = nameGenerator.GeneratePrename(gender);
             Gender = gender;
             Surname = surname;
+        }
+
+        public Person(NameGenerator nameGenerator, long year, Random rand, EarthAgeHelper earthAgeHelper)
+        {
+            Gender = (Gender)(rand.Next(0, 2));
+            Prename = nameGenerator.GeneratePrename(Gender);
+            Surname = nameGenerator.GenerateSurname();
+
+            SetBirthDateRange(year - 30, year - 15, rand);
+            SetDeathDateRange(15 + 100, rand);
+            SetJob(earthAgeHelper, rand);
         }
 
         public void SetBirthDateRange(long yearFrom, long yearTo, Random rand)

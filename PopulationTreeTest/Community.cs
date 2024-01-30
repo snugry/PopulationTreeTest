@@ -25,6 +25,19 @@ namespace PopulationTreeTest
             SetCommunityName(rand);
         }
 
+        public Community(long year, Random rand, EarthAgeHelper earthAgeHelp, NameGenerator nameGen)
+        {
+            Adults = [ new Person(nameGen, year, rand, earthAgeHelp),
+                new Person(nameGen, year, rand, earthAgeHelp) ];
+
+            SetCommunityName(rand);
+            Children = new List<Person>();
+            for (int i = 0; i< rand.Next(0,2); i++)
+            {
+                CreateChildren(rand, nameGen, rand.Next((int)year - 15, (int)year + 2), earthAgeHelp);
+            }
+        }
+
         private void SetCommunityName(Random rand)
         {
             int nameSwitch = rand.Next(0, 3);

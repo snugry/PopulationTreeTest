@@ -5,11 +5,11 @@ Console.WriteLine("Hello, World!");
 
 Timeline timeline = new Timeline(20, 0);
 
-timeline.CalculateTimeline(-10000, 3000);
+timeline.CalculateTimeline(-10000, 4000);
 
 Random rand = new Random();
 
-for(int i = -10000; i < 3001; i+= 1000)
+for(int i = -10000; i < 4001; i+= 1000)
 {
     var persons = timeline.GetPersonsFromYear(i);
     var communities = timeline.GetCommunitiesFromYear(i);

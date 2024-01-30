@@ -44,6 +44,21 @@ namespace PopulationTreeTest
             
         }
 
+        public string GeneratePrename()
+        {
+            Gender gender = (Gender)(_random.Next(0, 2));
+            return GeneratePrename(gender);
+        }
+
+        public string GeneratePrename(Gender gender)
+        {
+            if(gender == Gender.female)
+            {
+                return GeneratePrenameW();
+            }
+            return GeneratePrenameM();
+        }
+
         public string GeneratePrenameW()
         {
             int index = _random.Next(0, _prenamesW.Length);

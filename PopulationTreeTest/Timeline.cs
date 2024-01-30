@@ -27,8 +27,6 @@ namespace PopulationTreeTest
 
         private const int _MAX_AGE = 100;
 
-        private const int _CHILD_RATE = 10;
-
         public Timeline(int startPersons, long startYear = 0)
         {
             _earthAgeHelper = new EarthAgeHelper();
@@ -96,13 +94,24 @@ namespace PopulationTreeTest
 
             for (int i = 0; i <= movingNum; i++)
             {
-                Person p = new Person(_nameGenerator, (Gender)(_rand.Next(0, 2)));
-                p.SetBirthDateRange(year -30, year - 15, _rand);
-                p.SetDeathDateRange(15 + _MAX_AGE, _rand);
-                p.SetJob(_earthAgeHelper, _rand);
+                if (_rand.Next(0, 2) == 0)
+                {
+                    //Person moving in
+                    Person p = new Person(_nameGenerator, year, _rand, _earthAgeHelper);
 
-                _allPersons.Add(p);
-                movedPersons.Add(p);
+                    _allPersons.Add(p);
+                    movedPersons.Add(p);
+                }
+                else
+                {
+                    //Family Moving in
+                    Community c = new Community(year, _rand, _earthAgeHelper, _nameGenerator);
+                    _allPersons.AddRange(c.Children);
+                    _allPersons.AddRange(c.Adults);
+                    _allCommunities.Add(c);
+                    movedPersons.AddRange(c.Children);
+                    movedPersons.AddRange(c.Adults);
+                }
             }
             return movedPersons;
         }
