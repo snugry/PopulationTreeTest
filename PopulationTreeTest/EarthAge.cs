@@ -8,13 +8,13 @@ namespace PopulationTreeTest
 {
     public class EarthAge
     {
-        public long StartYear { get; private set; }
-        public long EndYear { get; private set; }
-        public string Name { get; private set; }
+        public long StartYear { get; set; }
+        public long EndYear { get; set; }
+        public string Name { get; set; }
 
-        public int ImmigrationRate { get; private set; }
+        public int ImmigrationRate { get; set; }
 
-        public float ChildPropability { get; private set; }
+        public float ChildPropability { get; set; }
 
         public List<string> PossibleJobs { get; set; }
 

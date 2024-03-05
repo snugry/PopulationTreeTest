@@ -26,15 +26,15 @@ namespace PopulationTreeTest
             stoneAge.PossibleJobs = new List<string> { "Hunter", "Collector" };
             ages.Add(stoneAge);
 
-            var ancientAge = new EarthAge(-2199, 500, "Ancient Age", 7, 0.45f);
+            var ancientAge = new EarthAge(-2199, 500, "Ancient Age", 5, 0.45f);
             ancientAge.PossibleJobs = new List<string> { "Farmer", "Builder", "Philosopher", "Merchant", "Baker", "Cook", "Dressmaker", "Senator", "Soldier", "Healer", "Slave" };
             ages.Add(ancientAge);
 
-            var middleAge = new EarthAge(501, 1500, "Middle Age", 15, 0.4f);
+            var middleAge = new EarthAge(501, 1500, "Middle Age", 12, 0.4f);
             middleAge.PossibleJobs = new List<string> { "Farmer", "Builder", "Traveling Entertainer", "Merchant", "Baker", "Noble", "Soldier", "Doctor" };
             ages.Add(middleAge);
 
-            var renaissance = new EarthAge(1501, 1849, "Renaissance", 25, 0.45f);
+            var renaissance = new EarthAge(1501, 1849, "Renaissance", 15, 0.45f);
             renaissance.PossibleJobs = new List<string> { "Farmer", "Builder", "Artist", "Merchant", "Noble", "Baker", "Soldier", "Doctor" };
             ages.Add(renaissance);
 
@@ -42,7 +42,7 @@ namespace PopulationTreeTest
             industrial.PossibleJobs = new List<string> { "Factory Worker", "Worker", "Farmer", "Builder", "Salesman", "Baker", "Soldier", "Doctor", "Artist", "Boss" };
             ages.Add(industrial);
 
-            var ww2 = new EarthAge(1933, 1945, "WW2", 100, 0.2f);
+            var ww2 = new EarthAge(1933, 1945, "WW2", 10, 0.2f);
             ww2.PossibleJobs = new List<string> { "Soldier", "Worker", "Farmer", "Builder", "Driver", "Baker", "Soldier", "Doctor", "Sergeant", "General" };
             ages.Add(ww2);
 
@@ -50,11 +50,11 @@ namespace PopulationTreeTest
             rebuild.PossibleJobs = new List<string> { "Factory Worker", "Worker", "Farmer", "Builder", "Salesman", "Baker", "Soldier", "Doctor", "Artist", "Boss" };
             ages.Add(rebuild);
 
-            var modern = new EarthAge(1981, 2047, "Modern Times", 120, 0.5f);
+            var modern = new EarthAge(1981, 2047, "Modern Times", 40, 0.5f);
             modern.PossibleJobs = new List<string> { "Banker", "Lawyer", "Worker", "Farmer", "Builder", "Salesman", "Baker", "Soldier", "Doctor", "Artist", "Boss" };
             ages.Add(modern);
 
-            var cyber = new EarthAge(2048, MAX_AGE, "Cyberpunk", 150, 0.45f);
+            var cyber = new EarthAge(2048, MAX_AGE, "Cyberpunk", 30, 0.45f);
             cyber.PossibleJobs = new List<string> { "Factory Worker", "Worker", "Farmer", "Builder", "Salesman", "Baker", "Soldier", "Doctor", "Artist", "Boss" };
             ages.Add(cyber);
         }
