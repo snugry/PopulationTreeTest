@@ -8,15 +8,15 @@ namespace PopulationTreeTest
 {
     public class EarthAge
     {
+        public string Name { get; set; }
         public long StartYear { get; set; }
         public long EndYear { get; set; }
-        public string Name { get; set; }
 
         public int ImmigrationRate { get; set; }
 
         public float ChildPropability { get; set; }
 
-        public List<string> PossibleJobs { get; set; }
+        public List<Job> PossibleJobs { get; set; }
 
         public EarthAge(long startYear, long endYear, string name, int immigrationRate, float childPropability)
         {
@@ -24,7 +24,7 @@ namespace PopulationTreeTest
             EndYear = endYear;
             Name = name;
             ImmigrationRate = immigrationRate;
-            PossibleJobs = new List<string>();
+            PossibleJobs = new List<Job>();
             ChildPropability = childPropability;
         }
 

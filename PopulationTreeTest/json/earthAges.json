@@ -1,0 +1,451 @@
+[
+  {
+    "Name": "Stone Age",
+    "StartYear": -10000,
+    "EndYear": -2200,
+    "ImmigrationRate": 3,
+    "ChildPropability": 0.3,
+    "PossibleJobs": [
+      {
+        "Name": "Hunter",
+        "Propability": 0.5
+      },
+      {
+        "Name": "Collector",
+        "Propability": 0.5
+      },
+      {
+        "Name": "Chief",
+        "Propability": 0.1
+      }
+    ]
+  },
+  {
+    "Name": "Ancient Age",
+    "StartYear": -2199,
+    "EndYear": 500,
+    "ImmigrationRate": 5,
+    "ChildPropability": 0.45,
+    "PossibleJobs": [
+      {
+        "Name": "Farmer",
+        "Propability": 0.6
+      },
+      {
+        "Name": "Builder",
+        "Propability": 0.4
+      },
+      {
+        "Name": "Philosopher",
+        "Propability": 0.2
+      },
+      {
+        "Name": "Merchant",
+        "Propability": 0.3
+      },
+      {
+        "Name": "Baker",
+        "Propability": 0.3
+      },
+      {
+        "Name": "Cook",
+        "Propability": 0.3
+      },
+      {
+        "Name": "Dressmaker",
+        "Propability": 0.3
+      },
+      {
+        "Name": "Senator",
+        "Propability": 0.1
+      },
+      {
+        "Name": "Soldier",
+        "Propability": 0.6
+      },
+      {
+        "Name": "Healer",
+        "Propability": 0.3
+      },
+      {
+        "Name": "Slave",
+        "Propability": 0.5
+      }
+    ]
+  },
+  {
+    "Name": "Middle Age",
+    "StartYear": 501,
+    "EndYear": 1500,
+    "ImmigrationRate": 12,
+    "ChildPropability": 0.4,
+    "PossibleJobs": [
+      {
+        "Name": "Farmer",
+        "Propability": 0.6
+      },
+      {
+        "Name": "Builder",
+        "Propability": 0.4
+      },
+      {
+        "Name": "Traveling Entertainer",
+        "Propability": 0.1
+      },
+      {
+        "Name": "Merchant",
+        "Propability": 0.3
+      },
+      {
+        "Name": "Baker",
+        "Propability": 0.3
+      },
+      {
+        "Name": "Cook",
+        "Propability": 0.3
+      },
+      {
+        "Name": "Dressmaker",
+        "Propability": 0.2
+      },
+      {
+        "Name": "Noble",
+        "Propability": 0.1
+      },
+      {
+        "Name": "Soldier",
+        "Propability": 0.6
+      },
+      {
+        "Name": "Doctor",
+        "Propability": 0.3
+      }
+    ]
+  },
+  {
+    "Name": "Renaissance",
+    "StartYear": 1501,
+    "EndYear": 1849,
+    "ImmigrationRate": 15,
+    "ChildPropability": 0.45,
+    "PossibleJobs": [
+      {
+        "Name": "Farmer",
+        "Propability": 0.6
+      },
+      {
+        "Name": "Builder",
+        "Propability": 0.4
+      },
+      {
+        "Name": "Artist",
+        "Propability": 0.1
+      },
+      {
+        "Name": "Merchant",
+        "Propability": 0.3
+      },
+      {
+        "Name": "Baker",
+        "Propability": 0.3
+      },
+      {
+        "Name": "Cook",
+        "Propability": 0.3
+      },
+      {
+        "Name": "Dressmaker",
+        "Propability": 0.3
+      },
+      {
+        "Name": "Noble",
+        "Propability": 0.1
+      },
+      {
+        "Name": "Soldier",
+        "Propability": 0.6
+      },
+      {
+        "Name": "Doctor",
+        "Propability": 0.3
+      }
+    ]
+  },
+  {
+    "Name": "Industrial Revolution",
+    "StartYear": 1850,
+    "EndYear": 1932,
+    "ImmigrationRate": 35,
+    "ChildPropability": 0.55,
+    "PossibleJobs": [
+      {
+        "Name": "Factory Worker",
+        "Propability": 0.8
+      },
+      {
+        "Name": "Farmer",
+        "Propability": 0.4
+      },
+      {
+        "Name": "Builder",
+        "Propability": 0.5
+      },
+      {
+        "Name": "Artist",
+        "Propability": 0.05
+      },
+      {
+        "Name": "Salesman",
+        "Propability": 0.3
+      },
+      {
+        "Name": "Baker",
+        "Propability": 0.3
+      },
+      {
+        "Name": "Cook",
+        "Propability": 0.3
+      },
+      {
+        "Name": "Dressmaker",
+        "Propability": 0.3
+      },
+      {
+        "Name": "Boss",
+        "Propability": 0.1
+      },
+      {
+        "Name": "Soldier",
+        "Propability": 0.5
+      },
+      {
+        "Name": "Doctor",
+        "Propability": 0.3
+      }
+    ]
+  },
+  {
+    "Name": "WW2",
+    "StartYear": 1933,
+    "EndYear": 1945,
+    "ImmigrationRate": 10,
+    "ChildPropability": 0.3,
+    "PossibleJobs": [
+      {
+        "Name": "Factory Worker",
+        "Propability": 0.3
+      },
+      {
+        "Name": "Farmer",
+        "Propability": 0.2
+      },
+      {
+        "Name": "Builder",
+        "Propability": 0.5
+      },
+      {
+        "Name": "Salesman",
+        "Propability": 0.2
+      },
+      {
+        "Name": "Baker",
+        "Propability": 0.3
+      },
+      {
+        "Name": "Cook",
+        "Propability": 0.2
+      },
+      {
+        "Name": "Dressmaker",
+        "Propability": 0.1
+      },
+      {
+        "Name": "General",
+        "Propability": 0.3
+      },
+      {
+        "Name": "Soldier",
+        "Propability": 1
+      },
+      {
+        "Name": "Doctor",
+        "Propability": 0.3
+      }
+    ]
+  },
+  {
+    "Name": "Rebuilding",
+    "StartYear": 1946,
+    "EndYear": 1980,
+    "ImmigrationRate": 50,
+    "ChildPropability": 0.55,
+    "PossibleJobs": [
+      {
+        "Name": "Factory Worker",
+        "Propability": 0.8
+      },
+      {
+        "Name": "Farmer",
+        "Propability": 0.4
+      },
+      {
+        "Name": "Builder",
+        "Propability": 0.5
+      },
+      {
+        "Name": "Artist",
+        "Propability": 0.05
+      },
+      {
+        "Name": "Salesman",
+        "Propability": 0.3
+      },
+      {
+        "Name": "Baker",
+        "Propability": 0.3
+      },
+      {
+        "Name": "Cook",
+        "Propability": 0.3
+      },
+      {
+        "Name": "Dressmaker",
+        "Propability": 0.3
+      },
+      {
+        "Name": "Boss",
+        "Propability": 0.1
+      },
+      {
+        "Name": "Soldier",
+        "Propability": 0.3
+      },
+      {
+        "Name": "Doctor",
+        "Propability": 0.3
+      }
+    ]
+  },
+  {
+    "Name": "Modern Times",
+    "StartYear": 1981,
+    "EndYear": 2047,
+    "ImmigrationRate": 40,
+    "ChildPropability": 0.5,
+    "PossibleJobs": [
+      {
+        "Name": "Lawyer",
+        "Propability": 0.2
+      },
+      {
+        "Name": "Banker",
+        "Propability": 0.2
+      },
+      {
+        "Name": "Factory Worker",
+        "Propability": 0.4
+      },
+      {
+        "Name": "Farmer",
+        "Propability": 0.4
+      },
+      {
+        "Name": "Builder",
+        "Propability": 0.5
+      },
+      {
+        "Name": "Artist",
+        "Propability": 0.05
+      },
+      {
+        "Name": "Salesman",
+        "Propability": 0.3
+      },
+      {
+        "Name": "Baker",
+        "Propability": 0.3
+      },
+      {
+        "Name": "Cook",
+        "Propability": 0.3
+      },
+      {
+        "Name": "Dressmaker",
+        "Propability": 0.3
+      },
+      {
+        "Name": "Boss",
+        "Propability": 0.1
+      },
+      {
+        "Name": "Soldier",
+        "Propability": 0.3
+      },
+      {
+        "Name": "Doctor",
+        "Propability": 0.3
+      }
+    ]
+  },
+  {
+    "Name": "Cyberpunk",
+    "StartYear": 2048,
+    "EndYear": 4000,
+    "ImmigrationRate": 30,
+    "ChildPropability": 0.45,
+    "PossibleJobs": [
+      {
+        "Name": "Lawyer",
+        "Propability": 0.2
+      },
+      {
+        "Name": "Banker",
+        "Propability": 0.2
+      },
+      {
+        "Name": "Factory Worker",
+        "Propability": 0.6
+      },
+      {
+        "Name": "Farmer",
+        "Propability": 0.2
+      },
+      {
+        "Name": "Builder",
+        "Propability": 0.5
+      },
+      {
+        "Name": "Artist",
+        "Propability": 0.05
+      },
+      {
+        "Name": "Salesman",
+        "Propability": 0.3
+      },
+      {
+        "Name": "Baker",
+        "Propability": 0.3
+      },
+      {
+        "Name": "Cook",
+        "Propability": 0.3
+      },
+      {
+        "Name": "Dressmaker",
+        "Propability": 0.3
+      },
+      {
+        "Name": "Boss",
+        "Propability": 0.1
+      },
+      {
+        "Name": "Soldier",
+        "Propability": 0.4
+      },
+      {
+        "Name": "Doctor",
+        "Propability": 0.3
+      }
+    ]
+  }
+]

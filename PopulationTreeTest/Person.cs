@@ -107,7 +107,7 @@ namespace PopulationTreeTest
         public void SetJob(EarthAgeHelper earthAgeHelper, Random rand)
         {
             var possibleJobs = earthAgeHelper.GetEarthAge(this.BirthDate.Year).PossibleJobs;
-            this.Job = possibleJobs[rand.Next(0, possibleJobs.Count)];
+            this.Job = possibleJobs[rand.Next(0, possibleJobs.Count)].Name;
         }
     }
 }

@@ -9,6 +9,6 @@ namespace PopulationTreeTest
     public class Job
     {
         public string Name { get; set; }
-        public float Rate { get; set; }
+        public float Propability { get; set; }
     }
 }
