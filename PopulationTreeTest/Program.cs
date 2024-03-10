@@ -18,6 +18,20 @@ for(int i = -10000; i < 4001; i+= 1000)
     Console.WriteLine("Random person:");
     var p = persons[rand.Next(0, persons.Count)];
     Console.WriteLine($"{p.Prename} {p.Surname}- Birthdate:{p.BirthDate}, Death:{p.DeathDate}, Job: {p.Job}");
+    if(p.Partner != null)
+    {
+        Console.WriteLine($"Partner: {p.Partner.Prename} {p.Partner.Surname}");
+    }
 }
+
+
+var personsTest = timeline.GetPersonsFromYear(1999);
+
+var pTest = personsTest[rand.Next(0, personsTest.Count)];
+timeline.RemovePersonAndAncestors(pTest);
+
+personsTest = timeline.GetPersonsFromYear(2000);
+var communitiesTest = timeline.GetCommunitiesFromYear(2000);
+Console.WriteLine($"2000: {personsTest.Count} persons, {communitiesTest.Count} communities");
 
 

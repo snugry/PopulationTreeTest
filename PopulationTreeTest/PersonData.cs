@@ -13,16 +13,16 @@ namespace PopulationTreeTest
         female
     }
 
-    public class Person
+    public class PersonData
     {
         public string Prename { get; private set; }
-        public string Surname { get; private set; }
+        public string Surname { get; set; }
 
         public LongDateTime BirthDate { get; private set; }
         public LongDateTime DeathDate { get; private set; }
 
         public Community Family { get; set; }
-        public Person Partner { get; set; }
+        public PersonData Partner { get; set; }
 
         public string Job { get; set; }
 
@@ -32,20 +32,20 @@ namespace PopulationTreeTest
 
         public Gender Gender { get; private set; }
 
-        public Person(NameGenerator nameGenerator, Gender gender) {
+        public PersonData(NameGenerator nameGenerator, Gender gender) {
             Prename = nameGenerator.GeneratePrename(gender);
             Gender = gender;
             Surname = nameGenerator.GenerateSurname();
         }
 
-        public Person(NameGenerator nameGenerator, Gender gender, string surname)
+        public PersonData(NameGenerator nameGenerator, Gender gender, string surname)
         {
             Prename = nameGenerator.GeneratePrename(gender);
             Gender = gender;
             Surname = surname;
         }
 
-        public Person(NameGenerator nameGenerator, long year, Random rand, EarthAgeHelper earthAgeHelper)
+        public PersonData(NameGenerator nameGenerator, long year, Random rand, EarthAgeHelper earthAgeHelper)
         {
             Gender = (Gender)(rand.Next(0, 2));
             Prename = nameGenerator.GeneratePrename(Gender);
@@ -107,7 +107,12 @@ namespace PopulationTreeTest
         public void SetJob(EarthAgeHelper earthAgeHelper, Random rand)
         {
             var possibleJobs = earthAgeHelper.GetEarthAge(this.BirthDate.Year).PossibleJobs;
-            this.Job = possibleJobs[rand.Next(0, possibleJobs.Count)].Name;
+            var tempJob = possibleJobs[rand.Next(0, possibleJobs.Count)];
+            while((float)rand.NextDouble() > tempJob.Propability)
+            {
+                tempJob = possibleJobs[rand.Next(0, possibleJobs.Count)];
+            }
+            this.Job = tempJob.Name;
         }
     }
 }

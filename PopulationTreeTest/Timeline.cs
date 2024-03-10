@@ -8,7 +8,7 @@ namespace PopulationTreeTest
 {
     public class Timeline
     {
-        private List<Person> _allPersons;
+        private List<PersonData> _allPersons;
         private List<Community> _allCommunities;
 
         private Random _rand;
@@ -30,7 +30,7 @@ namespace PopulationTreeTest
         public Timeline(int startPersons, long startYear = 0)
         {
             _earthAgeHelper = new EarthAgeHelper();
-            _allPersons = new List<Person>();
+            _allPersons = new List<PersonData>();
             _allCommunities = new List<Community>();
             _startYear = startYear;
 
@@ -39,7 +39,7 @@ namespace PopulationTreeTest
 
             for (int i = 0; i < startPersons; i++)
             {
-                Person p = new Person(_nameGenerator, (Gender)(_rand.Next(0, 2)));
+                PersonData p = new PersonData(_nameGenerator, (Gender)(_rand.Next(0, 2)));
                 p.SetBirthDateRange(startYear, _YEAR_RANGE, _rand);
                 p.SetDeathDateRange(_MAX_AGE, _rand);
                 p.SetJob(_earthAgeHelper, _rand);
@@ -51,14 +51,14 @@ namespace PopulationTreeTest
 
         public void CalculateTimeline(long startYear, long endYear)
         {
-            List<Person> availableP = _allPersons;
+            List<PersonData> availableP = _allPersons;
             List<Community> availableC = _allCommunities;
             for (long i = startYear; i <= endYear; i += _INTERVAL)
             {
                 availableP.AddRange(PeopleMovingIn(i));
 
                 availableP = availableP.FindAll(x => !x.Died && x.Partner == null);
-                List<Person> availablePersonsTemp = availableP.FindAll(x => x.GetAge(i) > 15 && x.GetAge(i) < 50 && !x.Died);
+                List<PersonData> availablePersonsTemp = availableP.FindAll(x => x.GetAge(i) > 15 && x.GetAge(i) < 50 && !x.Died);
                 availablePersonsTemp = availablePersonsTemp.OrderBy(x => _rand.Next()).ToList();
 
                 for(int j = 0; j < availablePersonsTemp.Count; j += 2)
@@ -86,18 +86,18 @@ namespace PopulationTreeTest
             }
         }
 
-        private List<Person> PeopleMovingIn(long year)
+        private List<PersonData> PeopleMovingIn(long year)
         {
             int movingNum = _rand.Next(0, _earthAgeHelper.GetImmigrationRate(year));
 
-            List<Person> movedPersons = new List<Person>();
+            List<PersonData> movedPersons = new List<PersonData>();
 
             for (int i = 0; i <= movingNum; i++)
             {
                 if (_rand.Next(0, 2) == 0)
                 {
                     //Person moving in
-                    Person p = new Person(_nameGenerator, year, _rand, _earthAgeHelper);
+                    PersonData p = new PersonData(_nameGenerator, year, _rand, _earthAgeHelper);
 
                     _allPersons.Add(p);
                     movedPersons.Add(p);
@@ -116,7 +116,7 @@ namespace PopulationTreeTest
             return movedPersons;
         }
 
-        private List<Community> CreateFamilyIfPossible(Person p1, Person p2)
+        private List<Community> CreateFamilyIfPossible(PersonData p1, PersonData p2)
         {
             if ((p1.Family == null || p2.Family == null || p1.Family != p2.Family) && (p1.Gender != p2.Gender))
             {
@@ -132,9 +132,9 @@ namespace PopulationTreeTest
             return new List<Community>();
         }
 
-        public List<Person> GetPersonsFromYear(long year)
+        public List<PersonData> GetPersonsFromYear(long year)
         {
-            List<Person> availableP = _allPersons.FindAll(x => x.BirthDate.Year < year && x.DeathDate.Year > year);
+            List<PersonData> availableP = _allPersons.FindAll(x => x.BirthDate.Year < year && x.DeathDate.Year > year);
 
             return availableP;
         }
@@ -144,6 +144,23 @@ namespace PopulationTreeTest
             List<Community> availableC = _allCommunities.FindAll(x => x.CommunityActive(year));
 
             return availableC;
+        }
+
+        public void RemovePersonAndAncestors(PersonData person)
+        {
+            if(person.Family != null && person.Family.Adults.Contains(person))
+            {
+                foreach(PersonData adult in person.Family.Adults)
+                {
+                    adult.Partner = null;
+                }
+                foreach(PersonData child in person.Family.Children)
+                {
+                    RemovePersonAndAncestors(child);
+                }
+                _allCommunities.Remove(person.Family);
+            }
+            _allPersons.Remove(person);
         }
     }
 }
