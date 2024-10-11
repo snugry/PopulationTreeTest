@@ -45,7 +45,7 @@ namespace PopulationTreeTest
                 p.SetJob(_earthAgeHelper, _rand);
 
                 _allPersons.Add(p);
-                Console.WriteLine($"{p.Prename} {p.Surname}- Birthdate:{p.BirthDate}, Death:{p.DeathDate}, Job: {p.Job}");
+                Console.WriteLine($"{p.Prename} {p.Surname} - Birthdate:{p.BirthDate}, Death:{p.DeathDate}, Job: {p.Job}");
             }
         }
 
@@ -58,7 +58,7 @@ namespace PopulationTreeTest
                 availableP.AddRange(PeopleMovingIn(i));
 
                 availableP = availableP.FindAll(x => !x.Died && x.Partner == null);
-                List<PersonData> availablePersonsTemp = availableP.FindAll(x => x.GetAge(i) > 15 && x.GetAge(i) < 50 && !x.Died);
+                List<PersonData> availablePersonsTemp = availableP.FindAll(x => x.GetAge(i) > 15 && x.GetAge(i) < 50);
                 availablePersonsTemp = availablePersonsTemp.OrderBy(x => _rand.Next()).ToList();
 
                 for(int j = 0; j < availablePersonsTemp.Count; j += 2)
@@ -146,7 +146,7 @@ namespace PopulationTreeTest
             return availableC;
         }
 
-        public void RemovePersonAndAncestors(PersonData person)
+        public void RemovePersonAndAncestors(PersonData person, long deathYear = -1)
         {
             if(person.Family != null && person.Family.Adults.Contains(person))
             {
@@ -160,7 +160,13 @@ namespace PopulationTreeTest
                 }
                 _allCommunities.Remove(person.Family);
             }
-            _allPersons.Remove(person);
+            if (deathYear == -1)
+            {
+                _allPersons.Remove(person);
+            }
+            else {
+                person.DeathDate = new LongDateTime(deathYear);
+            }
         }
     }
 }

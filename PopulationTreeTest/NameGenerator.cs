@@ -24,7 +24,7 @@ namespace PopulationTreeTest
 
         public NameGenerator(Random? random)
         {
-            string folder = @"C:\Users\david\Documents\Names";
+            string folder = @"csv";
             CsvReader csvReader = new CsvReader(Path.Combine(folder,PRENAME_W_FILE));
             _prenamesW = csvReader.ReadCsvValues(1, true);
             csvReader = new CsvReader(Path.Combine(folder, PRENAME_M_FILE));
@@ -60,13 +60,13 @@ namespace PopulationTreeTest
             return GeneratePrenameM();
         }
 
-        public string GeneratePrenameW()
+        private string GeneratePrenameW()
         {
             int index = _random.Next(0, _prenamesW.Length);
             return _prenamesW[index];
         }
 
-        public string GeneratePrenameM()
+        private string GeneratePrenameM()
         {
             int index = _random.Next(0, _prenamesM.Length);
             return _prenamesM[index];

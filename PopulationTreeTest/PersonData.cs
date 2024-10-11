@@ -19,10 +19,13 @@ namespace PopulationTreeTest
         public string Surname { get; set; }
 
         public LongDateTime BirthDate { get; private set; }
-        public LongDateTime DeathDate { get; private set; }
+        public LongDateTime DeathDate { get; set; }
 
         public Community Family { get; set; }
         public PersonData Partner { get; set; }
+
+        public PersonData[] Parents { get; set; }
+        public List<PersonData> Children { get; set; }
 
         public string Job { get; set; }
 
@@ -52,7 +55,7 @@ namespace PopulationTreeTest
             Surname = nameGenerator.GenerateSurname();
 
             SetBirthDateRange(year - 30, year - 15, rand);
-            SetDeathDateRange(15 + 100, rand);
+            SetDeathDateRange(100, rand);
             SetJob(earthAgeHelper, rand);
         }
 

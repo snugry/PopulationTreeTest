@@ -24,7 +24,7 @@ namespace PopulationTreeTest
         private void InitAges()
         {
             JsonReader _json = new JsonReader();
-            ages = _json.ReadJson(@"C:\Users\david\source\repos\PopulationTreeTest\PopulationTreeTest\json\earthAges.json");
+            ages = _json.ReadJson(@"json\earthAges.json");
         }
 
         public EarthAge GetEarthAge(long year)

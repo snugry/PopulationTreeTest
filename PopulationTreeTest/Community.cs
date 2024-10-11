@@ -27,12 +27,12 @@ namespace PopulationTreeTest
 
         public Community(long year, Random rand, EarthAgeHelper earthAgeHelp, NameGenerator nameGen)
         {
-            Adults = [ new PersonData(nameGen, year, rand, earthAgeHelp),
-                new PersonData(nameGen, year, rand, earthAgeHelp) ];
+            Adults = new PersonData[] { new PersonData(nameGen, year, rand, earthAgeHelp),
+                new PersonData(nameGen, year, rand, earthAgeHelp) };
 
             SetCommunityName(rand);
             Children = new List<PersonData>();
-            for (int i = 0; i< rand.Next(0,2); i++)
+            for (int i = 0; i< rand.Next(0,4); i++)
             {
                 CreateChildren(rand, nameGen, rand.Next((int)year - 15, (int)year + 2), earthAgeHelp);
             }
@@ -76,7 +76,7 @@ namespace PopulationTreeTest
             {
                 return children;
             }
-            int numChilds = rand.Next(0, 3);
+            int numChilds = rand.Next(0, 4);
 
             for (int i = 0; i < numChilds; i++)
             {
@@ -85,8 +85,13 @@ namespace PopulationTreeTest
                 p.SetDeathDateRange(100, rand);
                 p.SetJob(earthAge, rand);
                 p.Family = this;
+                p.Parents = Adults;
 
                 children.Add(p);
+            }
+            foreach(PersonData parent in Adults)
+            {
+                parent.Children = children;
             }
 
             Children.AddRange(children);
@@ -99,8 +104,7 @@ namespace PopulationTreeTest
             allMembers.AddRange(Adults);
             allMembers.AddRange(Children);
 
-            Calculated = Adults[0].GetAge(year) < 50 && Adults[1].GetAge(year) < 50 && 
-                allMembers.Any(x => x.BirthDate.Year < year && x.DeathDate.Year > year);
+            Calculated = allMembers.Any(x => x.BirthDate.Year < year && x.DeathDate.Year > year);
             return Calculated;
         }
     }
