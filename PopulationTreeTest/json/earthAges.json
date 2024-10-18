@@ -1,6 +1,6 @@
 [
   {
-    "Name": "Stone Age",
+    "Name": "StoneAge",
     "StartYear": -10000,
     "EndYear": -2200,
     "ImmigrationRate": 1,
@@ -21,7 +21,7 @@
     ]
   },
   {
-    "Name": "Ancient Age",
+    "Name": "AncientAge",
     "StartYear": -2199,
     "EndYear": 500,
     "ImmigrationRate": 3,
@@ -74,7 +74,7 @@
     ]
   },
   {
-    "Name": "Middle Age",
+    "Name": "MiddleAge",
     "StartYear": 501,
     "EndYear": 1500,
     "ImmigrationRate": 8,
@@ -172,7 +172,7 @@
     ]
   },
   {
-    "Name": "Industrial Revolution",
+    "Name": "IndustrialRevolution",
     "StartYear": 1850,
     "EndYear": 1932,
     "ImmigrationRate": 30,
@@ -327,7 +327,7 @@
     ]
   },
   {
-    "Name": "Modern Times",
+    "Name": "ModernTimes",
     "StartYear": 1981,
     "EndYear": 2047,
     "ImmigrationRate": 30,
