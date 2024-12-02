@@ -38,6 +38,14 @@ var personsTest = timeline.GetPersonsFromYear(1999);
 var pTest = personsTest[rand.Next(0, personsTest.Count)];
 timeline.RemovePersonAndAncestors(pTest, 1999);
 
+personsTest = timeline.GetPersonsFromYear(1999);
+pTest = personsTest[rand.Next(0, personsTest.Count)];
+timeline.RemovePersonAndAncestors(pTest, 1999);
+
+personsTest = timeline.GetPersonsFromYear(1999);
+pTest = personsTest[rand.Next(0, personsTest.Count)];
+timeline.RemovePersonAndAncestors(pTest, 1999);
+
 personsTest = timeline.GetPersonsFromYear(2000);
 var communitiesTest = timeline.GetCommunitiesFromYear(2000);
 Console.WriteLine($"2000: {personsTest.Count} persons, {communitiesTest.Count} communities");

@@ -21,7 +21,7 @@ namespace PopulationTreeTest
 
         private const int _INTERVAL = 1;
 
-        private const int _SEED = 1;
+        private const int _SEED = 27;
 
         private const int _YEAR_RANGE = 10;
 
@@ -58,7 +58,7 @@ namespace PopulationTreeTest
                 availableP.AddRange(PeopleMovingIn(i));
 
                 availableP = availableP.FindAll(x => !x.Died && x.Partner == null);
-                List<PersonData> availablePersonsTemp = availableP.FindAll(x => x.GetAge(i) > 15 && x.GetAge(i) < 50);
+                List<PersonData> availablePersonsTemp = availableP.FindAll(x => x.GetAge(i) > 15 && x.GetAge(i) < 50 && !x.Died);
                 availablePersonsTemp = availablePersonsTemp.OrderBy(x => _rand.Next()).ToList();
 
                 for(int j = 0; j < availablePersonsTemp.Count; j += 2)
@@ -154,9 +154,11 @@ namespace PopulationTreeTest
                 {
                     adult.Partner = null;
                 }
-                foreach(PersonData child in person.Family.Children)
+
+                //Remove childrean that were not born in death year
+                foreach(PersonData child in person.Family.Children.Where(p => p.BirthDate.Year > deathYear))
                 {
-                    RemovePersonAndAncestors(child);
+                    RemovePersonAndAncestors(child, -1);
                 }
                 _allCommunities.Remove(person.Family);
             }
