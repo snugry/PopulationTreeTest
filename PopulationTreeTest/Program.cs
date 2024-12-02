@@ -30,6 +30,10 @@ for(int i = -10000; i < 4001; i+= 1000)
     {
         Console.WriteLine($"I don't know who my parents are");
     }
+    if(p.Children != null && p.Children.Count > 0)
+    {
+        Console.WriteLine($"I have {p.Children.Count} children");
+    }
 }
 
 // Test Remove persons
@@ -51,6 +55,8 @@ var communitiesTest = timeline.GetCommunitiesFromYear(2000);
 Console.WriteLine($"2000: {personsTest.Count} persons, {communitiesTest.Count} communities");
 
 // TODO: Recalculate communities when a person was removed!
+timeline.CalculateTimeline(2000, 4000, false);
+
 personsTest = timeline.GetPersonsFromYear(4000);
 communitiesTest = timeline.GetCommunitiesFromYear(4000);
 Console.WriteLine($"4000: {personsTest.Count} persons, {communitiesTest.Count} communities");

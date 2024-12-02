@@ -49,19 +49,20 @@ namespace PopulationTreeTest
             }
         }
 
-        public void CalculateTimeline(long startYear, long endYear)
+        public void CalculateTimeline(long startYear, long endYear, bool movingIn = true)
         {
             List<PersonData> availableP = _allPersons;
             List<Community> availableC = _allCommunities;
             for (long i = startYear; i <= endYear; i += _INTERVAL)
             {
-                availableP.AddRange(PeopleMovingIn(i));
+                if(movingIn)
+                    availableP.AddRange(PeopleMovingIn(i));
 
                 availableP = availableP.FindAll(x => !x.Died && x.Partner == null);
                 List<PersonData> availablePersonsTemp = availableP.FindAll(x => x.GetAge(i) > 15 && x.GetAge(i) < 50 && !x.Died);
                 availablePersonsTemp = availablePersonsTemp.OrderBy(x => _rand.Next()).ToList();
 
-                for(int j = 0; j < availablePersonsTemp.Count; j += 2)
+                for(int j = 0; j < availablePersonsTemp.Count / _rand.Next(1,5); j += 2)
                 {
                     if(j+1 < availablePersonsTemp.Count)
                     {
