@@ -76,7 +76,7 @@ namespace PopulationTreeTest
             {
                 return children;
             }
-            int numChilds = rand.Next(0, 4);
+            int numChilds = rand.Next(0, 3);
 
             for (int i = 0; i < numChilds; i++)
             {
@@ -104,7 +104,7 @@ namespace PopulationTreeTest
             allMembers.AddRange(Adults);
             allMembers.AddRange(Children);
 
-            Calculated = allMembers.Any(x => x.BirthDate.Year < year && x.DeathDate.Year > year);
+            Calculated = Adults.All(x => x.BirthDate.Year < year && x.DeathDate.Year > year);
             return Calculated;
         }
     }
