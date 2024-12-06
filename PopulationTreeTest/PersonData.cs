@@ -117,5 +117,10 @@ namespace PopulationTreeTest
             }
             this.Job = tempJob.Name;
         }
+
+        public override string ToString()
+        {
+            return Prename + " " + Surname;
+        }
     }
 }

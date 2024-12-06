@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using PopulationTreeTest;
+using PopulationTreeTest.FileIO;
 
 Console.WriteLine("Hello, World!");
 
@@ -8,6 +9,11 @@ Timeline timeline = new Timeline(25, -10000);
 timeline.CalculateTimeline(-10000, 4000);
 
 Random rand = new Random();
+
+GraphWriter graph = new();
+var randComm = timeline.GetCommunitiesFromYear(rand.Next(1800, 3000)).First();
+
+graph.WriteGraph(randComm);
 
 for(int i = -10000; i < 4001; i+= 1000)
 {

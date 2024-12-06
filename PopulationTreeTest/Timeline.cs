@@ -9,7 +9,10 @@ namespace PopulationTreeTest
     public class Timeline
     {
         private List<PersonData> _allPersons;
+        public List<PersonData> AllPersons {  get { return _allPersons; } }
+
         private List<Community> _allCommunities;
+        public List<Community> AllCommunities { get { return _allCommunities; } }
 
         private Random _rand;
 
