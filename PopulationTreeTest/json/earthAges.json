@@ -24,7 +24,7 @@
     "Name": "AncientAge",
     "StartYear": -2199,
     "EndYear": 500,
-    "ImmigrationRate": 3,
+    "ImmigrationRate": 2,
     "ChildPropability": 0.45,
     "PossibleJobs": [
       {
@@ -77,7 +77,7 @@
     "Name": "MiddleAge",
     "StartYear": 501,
     "EndYear": 1500,
-    "ImmigrationRate": 8,
+    "ImmigrationRate": 6,
     "ChildPropability": 0.4,
     "PossibleJobs": [
       {
@@ -126,7 +126,7 @@
     "Name": "Renaissance",
     "StartYear": 1501,
     "EndYear": 1849,
-    "ImmigrationRate": 10,
+    "ImmigrationRate": 8,
     "ChildPropability": 0.45,
     "PossibleJobs": [
       {
@@ -175,7 +175,7 @@
     "Name": "IndustrialRevolution",
     "StartYear": 1850,
     "EndYear": 1932,
-    "ImmigrationRate": 30,
+    "ImmigrationRate": 20,
     "ChildPropability": 0.55,
     "PossibleJobs": [
       {
@@ -277,7 +277,7 @@
     "Name": "Rebuilding",
     "StartYear": 1946,
     "EndYear": 1980,
-    "ImmigrationRate": 40,
+    "ImmigrationRate": 30,
     "ChildPropability": 0.55,
     "PossibleJobs": [
       {
@@ -330,7 +330,7 @@
     "Name": "ModernTimes",
     "StartYear": 1981,
     "EndYear": 2047,
-    "ImmigrationRate": 30,
+    "ImmigrationRate": 20,
     "ChildPropability": 0.5,
     "PossibleJobs": [
       {
@@ -391,7 +391,7 @@
     "Name": "Cyberpunk",
     "StartYear": 2048,
     "EndYear": 4000,
-    "ImmigrationRate": 28,
+    "ImmigrationRate": 20,
     "ChildPropability": 0.45,
     "PossibleJobs": [
       {

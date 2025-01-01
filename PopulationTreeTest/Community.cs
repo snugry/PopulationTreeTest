@@ -72,11 +72,11 @@ namespace PopulationTreeTest
         {
             EarthAge age = earthAge.GetEarthAge(year);
             List<PersonData> children = new List<PersonData>();
-            if(rand.NextDouble() > age.ChildPropability)
+            if(rand.NextDouble() <= age.ChildPropability)
             {
                 return children;
             }
-            int numChilds = rand.Next(0, 3);
+            int numChilds = rand.Next(0, 6);
 
             for (int i = 0; i < numChilds; i++)
             {
@@ -89,21 +89,17 @@ namespace PopulationTreeTest
 
                 children.Add(p);
             }
-            foreach(PersonData parent in Adults)
-            {
-                parent.Children = children;
-            }
 
             Children.AddRange(children);
+            foreach (PersonData parent in Adults)
+            {
+                parent.Children = Children;
+            }
             return children;
         }
 
         public bool CommunityActive(long year)
         {
-            List<PersonData> allMembers = new List<PersonData>();
-            allMembers.AddRange(Adults);
-            allMembers.AddRange(Children);
-
             Calculated = Adults.All(x => x.BirthDate.Year < year && x.DeathDate.Year > year);
             return Calculated;
         }

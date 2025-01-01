@@ -10,17 +10,20 @@ timeline.CalculateTimeline(-10000, 4000);
 
 Random rand = new Random();
 
-GraphWriter graph = new();
-var randComm = timeline.GetCommunitiesFromYear(rand.Next(1800, 3000)).First();
+//GraphWriter graph = new();
+//var randComm = timeline.GetCommunitiesFromYear(rand.Next(1800, 3000)).First();
 
-graph.WriteGraph(randComm);
+//graph.WriteGraph(randComm);
 
 for(int i = -10000; i < 4001; i+= 1000)
 {
     var persons = timeline.GetPersonsFromYear(i);
     var communities = timeline.GetCommunitiesFromYear(i);
 
-    Console.WriteLine($"{i}: {persons.Count} persons, {communities.Count} communities");
+    int personsYoung = persons.Where(p => p.GetAge(i) < 60 && p.GetAge(i) > 18).Count();
+    int personsWChildren = persons.Where(p => p.Children != null && p.Children.Count() > 0).Count();
+
+    Console.WriteLine($"{i}: {persons.Count} persons, {personsYoung} young persons, {personsWChildren} person have children, {communities.Count} communities");
     Console.WriteLine("Random person:");
     var p = persons[rand.Next(0, persons.Count)];
     Console.WriteLine($"Hi, I'm {p.Prename} {p.Surname} - born on {p.BirthDate}. My Job is {p.Job}");
@@ -39,6 +42,8 @@ for(int i = -10000; i < 4001; i+= 1000)
     if(p.Children != null && p.Children.Count > 0)
     {
         Console.WriteLine($"I have {p.Children.Count} children");
+        if(p.Family.Children != null)
+            Console.WriteLine($"My family has {p.Family.Children.Count} children");
     }
 }
 

@@ -62,10 +62,10 @@ namespace PopulationTreeTest
                     availableP.AddRange(PeopleMovingIn(i));
 
                 availableP = availableP.FindAll(x => !x.Died && x.Partner == null);
-                List<PersonData> availablePersonsTemp = availableP.FindAll(x => x.GetAge(i) > 15 && x.GetAge(i) < 50 && !x.Died);
+                List<PersonData> availablePersonsTemp = availableP.FindAll(x => x.GetAge(i) > 15 && x.GetAge(i) < 60 && !x.Died);
                 availablePersonsTemp = availablePersonsTemp.OrderBy(x => _rand.Next()).ToList();
 
-                for(int j = 0; j < availablePersonsTemp.Count / _rand.Next(1,5); j += 2)
+                for(int j = 0; j < availablePersonsTemp.Count / _rand.Next(1,4); j += 2)
                 {
                     if(j+1 < availablePersonsTemp.Count)
                     {
@@ -122,7 +122,7 @@ namespace PopulationTreeTest
 
         private List<Community> CreateFamilyIfPossible(PersonData p1, PersonData p2)
         {
-            if ((p1.Family == null || p2.Family == null || p1.Family != p2.Family) && (p1.Gender != p2.Gender))
+            if ((p1.Family == null || p2.Family == null || p1.Family != p2.Family))
             {
                 p1.Partner = p2;
                 p2.Partner = p1;
