@@ -14,6 +14,8 @@ namespace PopulationTreeTest
         private List<Community> _allCommunities;
         public List<Community> AllCommunities { get { return _allCommunities; } }
 
+        private List<Disaster> _disasters;
+
         private Random _rand;
 
         private NameGenerator _nameGenerator;
@@ -36,6 +38,7 @@ namespace PopulationTreeTest
             _allPersons = new List<PersonData>();
             _allCommunities = new List<Community>();
             _startYear = startYear;
+            _disasters = new List<Disaster>();
 
             _rand = new Random(_SEED);
             _nameGenerator = new NameGenerator(_rand);

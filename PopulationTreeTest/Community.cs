@@ -81,7 +81,7 @@ namespace PopulationTreeTest
             for (int i = 0; i < numChilds; i++)
             {
                 PersonData p = new PersonData(nameGen, (Gender)(rand.Next(0, 1)), CommunityName);
-                p.SetBirthDateRange(year, year+15, rand);
+                p.SetBirthDateRange(year, year + 60 - Adults[0].GetAge(year), rand);
                 p.SetDeathDateRange(100, rand);
                 p.SetJob(earthAge, rand);
                 p.Family = this;
@@ -100,7 +100,7 @@ namespace PopulationTreeTest
 
         public bool CommunityActive(long year)
         {
-            return Adults.All(x => x.BirthDate.Year < year && x.DeathDate.Year > year);
+            return Adults.All(x => x.GetAge(year) > 15 && x.GetAge(year) < 60);
         }
     }
 }
