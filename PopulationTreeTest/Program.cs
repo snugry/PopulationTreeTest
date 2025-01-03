@@ -43,7 +43,9 @@ for(int i = -10000; i < 4001; i+= 1000)
     {
         Console.WriteLine($"I have {p.Children.Count} children");
         if(p.Family.Children != null)
+        {
             Console.WriteLine($"My family has {p.Family.Children.Count} children");
+        }          
     }
 }
 

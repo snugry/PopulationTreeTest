@@ -74,17 +74,14 @@ namespace PopulationTreeTest
                 }
 
                 List<Community> availableCommTemp = new List<Community>();
-                foreach (Community comm in availableC.Where(x => !x.Calculated))
+                foreach (Community comm in availableC.Where(x => x.CommunityActive(i) && !x.Calculated))
                 {
-                    if (comm.CommunityActive(i))
-                    {
-                        availableCommTemp.Add(comm);
+                    availableCommTemp.Add(comm);
 
-                        var children = comm.CreateChildren(_rand, _nameGenerator, i, _earthAgeHelper);
+                    var children = comm.CreateChildren(_rand, _nameGenerator, i, _earthAgeHelper);
 
-                        _allPersons.AddRange(children);
-                        availableP.AddRange(children);
-                    }
+                    _allPersons.AddRange(children);
+                    availableP.AddRange(children);
                 }
                 availableC = availableCommTemp;
             }
