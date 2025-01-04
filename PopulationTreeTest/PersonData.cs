@@ -21,6 +21,8 @@ namespace PopulationTreeTest
         public LongDateTime BirthDate { get; private set; }
         public LongDateTime DeathDate { get; set; }
 
+        public string DeathReason { get; set; } = "";
+
         public Community Family { get; set; }
         public PersonData Partner { get; set; }
 
@@ -48,7 +50,7 @@ namespace PopulationTreeTest
             Surname = surname;
         }
 
-        public PersonData(NameGenerator nameGenerator, long year, Random rand, EarthAgeHelper earthAgeHelper)
+        public PersonData(NameGenerator nameGenerator, int year, Random rand, EarthAgeHelper earthAgeHelper)
         {
             Gender = (Gender)(rand.Next(0, 2));
             Prename = nameGenerator.GeneratePrename(Gender);
@@ -59,13 +61,13 @@ namespace PopulationTreeTest
             SetJob(earthAgeHelper, rand);
         }
 
-        public void SetBirthDateRange(long yearFrom, long yearTo, Random rand)
+        public void SetBirthDateRange(int yearFrom, int yearTo, Random rand)
         {
-            long year = rand.NextInt64(yearFrom, yearTo);
+            int year = rand.Next(yearFrom, yearTo);
             SetBirthDate(year, rand);
         }
 
-        public void SetBirthDate(long year, Random rand)
+        public void SetBirthDate(int year, Random rand)
         {
             int month = rand.Next(1, 13);
             int day = rand.Next(1, LongDateTime.GetDaysInMonth(month, year) + 1);
@@ -73,23 +75,23 @@ namespace PopulationTreeTest
             BirthDate = new LongDateTime(year, month, day);
         }
 
-        public void SetDeathDateRange(long maxAge, Random rand)
+        public void SetDeathDateRange(int maxAge, Random rand)
         {
             int ageSwitch = rand.Next(0,3);
 
             int yearRange = 20;
             if(maxAge < 10)
             {
-                yearRange = (int)maxAge;
+                yearRange = maxAge;
             }
-            long year;
+            int year;
             if(ageSwitch == 0)
             {
-                year = rand.NextInt64(BirthDate.Year, BirthDate.Year + maxAge + 1);
+                year = rand.Next(BirthDate.Year, BirthDate.Year + maxAge + 1);
             }
             else
             {            
-                year = rand.NextInt64(BirthDate.Year + maxAge - yearRange, BirthDate.Year + maxAge + 1);
+                year = rand.Next(BirthDate.Year + maxAge - yearRange, BirthDate.Year + maxAge + 1);
             }
             int month = rand.Next(1, 13);
             int day = rand.Next(1, LongDateTime.GetDaysInMonth(month, year) + 1);

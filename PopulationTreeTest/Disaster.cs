@@ -12,5 +12,7 @@ namespace PopulationTreeTest
         public int year;
 
         public int peopleDied;
+
+        public string name;
     }
 }

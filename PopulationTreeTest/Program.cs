@@ -6,6 +6,8 @@ Console.WriteLine("Hello, World!");
 
 Timeline timeline = new Timeline(25, -10000);
 
+timeline.AddDisaster(1352, 500, "The Great Fire");
+timeline.AddDisaster(1933, 1000, "The Great War");
 timeline.CalculateTimeline(-10000, 4000);
 
 Random rand = new Random();
@@ -15,7 +17,7 @@ Random rand = new Random();
 
 //graph.WriteGraph(randComm);
 
-for(int i = -10000; i < 4001; i+= 1000)
+for(int i = -10000; i < 4001; i+= 500)
 {
     var persons = timeline.GetPersonsFromYear(i);
     var communities = timeline.GetCommunitiesFromYear(i);
@@ -53,14 +55,6 @@ for(int i = -10000; i < 4001; i+= 1000)
 var personsTest = timeline.GetPersonsFromYear(1999);
 
 var pTest = personsTest[rand.Next(0, personsTest.Count)];
-timeline.RemovePersonAndAncestors(pTest, 1999);
-
-personsTest = timeline.GetPersonsFromYear(1999);
-pTest = personsTest[rand.Next(0, personsTest.Count)];
-timeline.RemovePersonAndAncestors(pTest, 1999);
-
-personsTest = timeline.GetPersonsFromYear(1999);
-pTest = personsTest[rand.Next(0, personsTest.Count)];
 timeline.RemovePersonAndAncestors(pTest, 1999);
 
 personsTest = timeline.GetPersonsFromYear(2000);

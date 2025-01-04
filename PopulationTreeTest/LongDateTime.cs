@@ -8,25 +8,25 @@ namespace PopulationTreeTest
 {
     public class LongDateTime
     {
-        public long Year { get; set; }
+        public int Year { get; set; }
         public int Month { get; set; }
         public int Day { get; set; }
 
-        public LongDateTime(long year, int month, int day)
+        public LongDateTime(int year, int month, int day)
         {
             Year = year;
             Month = month;
             Day = day;
         }
 
-        public LongDateTime(long year) 
+        public LongDateTime(int year) 
         { 
             Year = year;
             Month = 1;
             Day = 1;
         }
 
-        public void AddYears(long years)
+        public void AddYears(int years)
         {
             Year = Year + years;
         }
@@ -36,7 +36,7 @@ namespace PopulationTreeTest
             return $"{Day}.{Month}.{Year}";
         }
 
-        public static int GetDaysInMonth(int month, long year)
+        public static int GetDaysInMonth(int month, int year)
         {
             if(month == 1 ||  month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
             {

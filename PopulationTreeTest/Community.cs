@@ -25,7 +25,7 @@ namespace PopulationTreeTest
             SetCommunityName(rand);
         }
 
-        public Community(long year, Random rand, EarthAgeHelper earthAgeHelp, NameGenerator nameGen)
+        public Community(int year, Random rand, EarthAgeHelper earthAgeHelp, NameGenerator nameGen)
         {
             Adults = new PersonData[] { new PersonData(nameGen, year, rand, earthAgeHelp),
                 new PersonData(nameGen, year, rand, earthAgeHelp) };
@@ -67,7 +67,7 @@ namespace PopulationTreeTest
             Adults[1].Surname = CommunityName;
         }
 
-        public List<PersonData> CreateChildren(Random rand, NameGenerator nameGen, long year, EarthAgeHelper earthAge)
+        public List<PersonData> CreateChildren(Random rand, NameGenerator nameGen, int year, EarthAgeHelper earthAge)
         {
             Calculated = true;
             EarthAge age = earthAge.GetEarthAge(year);

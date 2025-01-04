@@ -14,7 +14,7 @@ namespace PopulationTreeTest
         private List<Community> _allCommunities;
         public List<Community> AllCommunities { get { return _allCommunities; } }
 
-        private List<Disaster> _disasters;
+        private Dictionary<int, Disaster> _disasters;
 
         private Random _rand;
 
@@ -32,13 +32,13 @@ namespace PopulationTreeTest
 
         private const int _MAX_AGE = 100;
 
-        public Timeline(int startPersons, long startYear = 0)
+        public Timeline(int startPersons, int startYear = 0)
         {
             _earthAgeHelper = new EarthAgeHelper();
             _allPersons = new List<PersonData>();
             _allCommunities = new List<Community>();
             _startYear = startYear;
-            _disasters = new List<Disaster>();
+            _disasters = new Dictionary<int, Disaster>();
 
             _rand = new Random(_SEED);
             _nameGenerator = new NameGenerator(_rand);
@@ -55,14 +55,18 @@ namespace PopulationTreeTest
             }
         }
 
-        public void CalculateTimeline(long startYear, long endYear, bool movingIn = true)
+        public void CalculateTimeline(int startYear, int endYear, bool movingIn = true)
         {
             List<PersonData> availableP = _allPersons;
             List<Community> availableC = _allCommunities;
-            for (long i = startYear; i <= endYear; i += _INTERVAL)
+            for (int i = (int)startYear; i <= endYear; i += _INTERVAL)
             {
                 if(movingIn)
                     availableP.AddRange(PeopleMovingIn(i));
+
+                availableP = availableP.FindAll(x => !x.Died);
+                CheckDisaster(availableP, i);
+
 
                 availableP = availableP.FindAll(x => !x.Died && x.Partner == null);
                 List<PersonData> availablePersonsTemp = availableP.FindAll(x => x.GetAge(i) > 15 && x.GetAge(i) < 60 && !x.Died);
@@ -90,7 +94,30 @@ namespace PopulationTreeTest
             }
         }
 
-        private List<PersonData> PeopleMovingIn(long year)
+        public void AddDisaster(int year, int peopleDied, string name)
+        {
+            _disasters.Add(year, new Disaster { year=year, peopleDied=peopleDied, name=name });
+        }
+
+        private void CheckDisaster(List<PersonData> availablePersons, int year)
+        {
+            if (_disasters.ContainsKey(year))
+            {
+                var availablePersonsTemp = availablePersons.OrderBy(x => _rand.Next()).ToList();
+
+                int count = _disasters[year].peopleDied;
+                for(int i= 0; i < count; i++)
+                {
+                    if(i<availablePersonsTemp.Count)
+                    {
+                        availablePersonsTemp[i].DeathDate = new LongDateTime(year);
+                        availablePersonsTemp[i].DeathReason = _disasters[year].name;
+                    }
+                }
+            }
+        }
+
+        private List<PersonData> PeopleMovingIn(int year)
         {
             int movingNum = _rand.Next(0, _earthAgeHelper.GetImmigrationRate(year));
 
@@ -150,7 +177,7 @@ namespace PopulationTreeTest
             return availableC;
         }
 
-        public void RemovePersonAndAncestors(PersonData person, long deathYear = -1)
+        public void RemovePersonAndAncestors(PersonData person, int deathYear = -1)
         {
             if(person.Family != null && person.Family.Adults.Contains(person))
             {
