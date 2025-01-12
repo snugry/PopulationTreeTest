@@ -30,6 +30,9 @@ namespace PopulationTreeTest
 
         private const int _YEAR_RANGE = 10;
 
+        private const int _MIN_MARRIAGE_AGE = 15;
+        private const int _MAX_MARRIAGE_AGE = 50;
+
         private const int _MAX_AGE = 100;
 
         public Timeline(int startPersons, int startYear = 0)
@@ -61,37 +64,61 @@ namespace PopulationTreeTest
             List<Community> availableC = _allCommunities;
             for (int i = (int)startYear; i <= endYear; i += _INTERVAL)
             {
-                if(movingIn)
+                if (movingIn)
+                {
                     availableP.AddRange(PeopleMovingIn(i));
-
-                availableP = availableP.FindAll(x => !x.Died);
+                }
+                //Unfortunately we have to check died before and after Disaster Checks
+                availableP = availableP.FindAll(p => !p.Died);
                 CheckDisaster(availableP, i);
 
+                availableP = availableP.FindAll(p => !p.Died && p.Partner == null);
+                List<PersonData> availableActivePersons = FilterActivePersons(availableP, i);
 
-                availableP = availableP.FindAll(x => !x.Died && x.Partner == null);
-                List<PersonData> availablePersonsTemp = availableP.FindAll(x => x.GetAge(i) > 15 && x.GetAge(i) < 60 && !x.Died);
-                availablePersonsTemp = availablePersonsTemp.OrderBy(x => _rand.Next()).ToList();
+                availableC.AddRange(CreateFamiliesForYear(availableActivePersons, i));
 
-                for(int j = 0; j < availablePersonsTemp.Count / _rand.Next(1,4); j += 2)
+                availableC = ProcessCommunitiesForYear(availableC, availableP, i);
+            }
+        }
+
+        private List<PersonData> FilterActivePersons(List<PersonData> persons, int year)
+        {
+            return persons.FindAll(p => p.GetAge(year) > _MIN_MARRIAGE_AGE && p.GetAge(year) < _MAX_MARRIAGE_AGE);
+        }
+
+        private List<Community> CreateFamiliesForYear(List<PersonData> persons, int year)
+        {
+            var shuffledPersons = persons.OrderBy(x => _rand.Next()).ToList();
+
+            var newCommunities = new List<Community>();
+            for (int j = 0; j < shuffledPersons.Count / _rand.Next(1, 4); j += 2)
+            {
+                if (j + 1 < shuffledPersons.Count)
                 {
-                    if(j+1 < availablePersonsTemp.Count)
+                    var newComm = Community.CreateFamilyIfPossible(shuffledPersons[j], shuffledPersons[j + 1], _rand);
+                    if (newComm != null)
                     {
-                        availableC.AddRange(CreateFamilyIfPossible(availablePersonsTemp[j], availablePersonsTemp[j+1]));
+                        _allCommunities.Add(newComm);
+                        newCommunities.Add(newComm);
                     }
                 }
-
-                List<Community> availableCommTemp = new List<Community>();
-                foreach (Community comm in availableC.Where(x => x.CommunityActive(i) && !x.Calculated))
-                {
-                    availableCommTemp.Add(comm);
-
-                    var children = comm.CreateChildren(_rand, _nameGenerator, i, _earthAgeHelper);
-
-                    _allPersons.AddRange(children);
-                    availableP.AddRange(children);
-                }
-                availableC = availableCommTemp;
             }
+            return newCommunities;
+        }
+
+        private List<Community> ProcessCommunitiesForYear(List<Community> communities, List<PersonData> persons, int year)
+        {
+            List<Community> activeCommunities = new List<Community>();
+            foreach (Community comm in communities.Where(x => x.CommunityActive(year) && !x.Calculated))
+            {
+                activeCommunities.Add(comm);
+
+                var children = comm.CreateChildren(_rand, _nameGenerator, year, _earthAgeHelper);
+
+                _allPersons.AddRange(children);
+                persons.AddRange(children);
+            }
+            return activeCommunities;
         }
 
         public void AddDisaster(int year, int peopleDied, string name)
@@ -145,22 +172,6 @@ namespace PopulationTreeTest
                 }
             }
             return movedPersons;
-        }
-
-        private List<Community> CreateFamilyIfPossible(PersonData p1, PersonData p2)
-        {
-            if ((p1.Family == null || p2.Family == null || p1.Family != p2.Family))
-            {
-                p1.Partner = p2;
-                p2.Partner = p1;
-                Community comm = new Community(p1, p2, _rand);
-                p1.Family = comm;
-                p2.Family = comm;
-
-                _allCommunities.Add(comm);
-                return new List<Community> { comm};
-            }
-            return new List<Community>();
         }
 
         public List<PersonData> GetPersonsFromYear(long year)

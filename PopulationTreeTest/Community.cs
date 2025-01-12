@@ -102,5 +102,20 @@ namespace PopulationTreeTest
         {
             return Adults.All(x => x.GetAge(year) > 15 && x.GetAge(year) < 60);
         }
+
+        public static Community CreateFamilyIfPossible(PersonData p1, PersonData p2, System.Random rand)
+        {
+            if ((p1.Family == null || p2.Family == null || p1.Family != p2.Family))
+            {
+                p1.Partner = p2;
+                p2.Partner = p1;
+                Community comm = new Community(p1, p2, rand);
+                p1.Family = comm;
+                p2.Family = comm;
+
+                return comm;
+            }
+            return null;
+        }
     }
 }

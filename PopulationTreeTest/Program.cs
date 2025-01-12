@@ -8,6 +8,7 @@ Timeline timeline = new Timeline(25, -10000);
 
 timeline.AddDisaster(1352, 500, "The Great Fire");
 timeline.AddDisaster(1933, 1000, "The Great War");
+timeline.AddDisaster(2084, 2000, "The Comet");
 timeline.CalculateTimeline(-10000, 4000);
 
 Random rand = new Random();
