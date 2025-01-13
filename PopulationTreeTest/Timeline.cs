@@ -121,6 +121,13 @@ namespace PopulationTreeTest
             return activeCommunities;
         }
 
+        private List<Flat> AddHousesAndFlatsForYear(List<Community> communities)
+        {
+            var communitiesWithoutHouse = communities.Where(c => c.Home == null);
+            return new List<Flat>();
+
+        }
+
         public void AddDisaster(int year, int peopleDied, string name)
         {
             _disasters.Add(year, new Disaster { year=year, peopleDied=peopleDied, name=name });

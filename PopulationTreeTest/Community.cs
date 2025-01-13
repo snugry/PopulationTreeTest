@@ -15,6 +15,8 @@ namespace PopulationTreeTest
 
         public List<PersonData> Children { get; set; }
 
+        public Flat Home { get; set; }
+
         public bool Calculated { get; set; } = false;
 
         public Community(PersonData person1, PersonData person2, Random rand)

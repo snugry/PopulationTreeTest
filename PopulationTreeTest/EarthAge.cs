@@ -16,7 +16,11 @@ namespace PopulationTreeTest
 
         public float ChildPropability { get; set; }
 
+        public int MaxChildNumber { get; set; }
+
         public List<Job> PossibleJobs { get; set; }
+
+        public int MaxHouseFloors {  get; set; }
 
         public EarthAge(long startYear, long endYear, string name, int immigrationRate, float childPropability)
         {

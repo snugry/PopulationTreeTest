@@ -5,6 +5,8 @@
     "EndYear": -2200,
     "ImmigrationRate": 1,
     "ChildPropability": 0.25,
+    "MaxChildNumber": 5,
+    "MaxHouseFloors":  1,
     "PossibleJobs": [
       {
         "Name": "Hunter",
@@ -26,6 +28,8 @@
     "EndYear": 500,
     "ImmigrationRate": 2,
     "ChildPropability": 0.45,
+    "MaxChildNumber": 4,
+    "MaxHouseFloors": 1,
     "PossibleJobs": [
       {
         "Name": "Farmer",
@@ -79,6 +83,8 @@
     "EndYear": 1500,
     "ImmigrationRate": 6,
     "ChildPropability": 0.4,
+    "MaxChildNumber": 5,
+    "MaxHouseFloors": 3,
     "PossibleJobs": [
       {
         "Name": "Farmer",
@@ -128,6 +134,8 @@
     "EndYear": 1849,
     "ImmigrationRate": 8,
     "ChildPropability": 0.45,
+    "MaxChildNumber": 4,
+    "MaxHouseFloors": 5,
     "PossibleJobs": [
       {
         "Name": "Farmer",
@@ -177,6 +185,8 @@
     "EndYear": 1932,
     "ImmigrationRate": 20,
     "ChildPropability": 0.55,
+    "MaxChildNumber": 5,
+    "MaxHouseFloors": 6,
     "PossibleJobs": [
       {
         "Name": "Factory Worker",
@@ -230,6 +240,8 @@
     "EndYear": 1945,
     "ImmigrationRate": 10,
     "ChildPropability": 0.3,
+    "MaxChildNumber": 2,
+    "MaxHouseFloors": 5,
     "PossibleJobs": [
       {
         "Name": "Factory Worker",
@@ -279,6 +291,8 @@
     "EndYear": 1980,
     "ImmigrationRate": 30,
     "ChildPropability": 0.55,
+    "MaxChildNumber": 5,
+    "MaxHouseFloors": 7,
     "PossibleJobs": [
       {
         "Name": "Factory Worker",
@@ -332,6 +346,8 @@
     "EndYear": 2047,
     "ImmigrationRate": 20,
     "ChildPropability": 0.5,
+    "MaxChildNumber": 5,
+    "MaxHouseFloors": 7,
     "PossibleJobs": [
       {
         "Name": "Lawyer",
@@ -393,6 +409,8 @@
     "EndYear": 4000,
     "ImmigrationRate": 20,
     "ChildPropability": 0.45,
+    "MaxChildNumber": 3,
+    "MaxHouseFloors": 10,
     "PossibleJobs": [
       {
         "Name": "Lawyer",
