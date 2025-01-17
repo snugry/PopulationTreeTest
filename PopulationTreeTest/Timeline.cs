@@ -14,6 +14,9 @@ namespace PopulationTreeTest
         private List<Community> _allCommunities;
         public List<Community> AllCommunities { get { return _allCommunities; } }
 
+        private List<House> _allHouses;
+        public List<House> AllHouses { get {  return _allHouses; } }
+
         private Dictionary<int, Disaster> _disasters;
 
         private Random _rand;
@@ -40,6 +43,7 @@ namespace PopulationTreeTest
             _earthAgeHelper = new EarthAgeHelper();
             _allPersons = new List<PersonData>();
             _allCommunities = new List<Community>();
+            _allHouses = new List<House>();
             _startYear = startYear;
             _disasters = new Dictionary<int, Disaster>();
 
@@ -78,6 +82,7 @@ namespace PopulationTreeTest
                 availableC.AddRange(CreateFamiliesForYear(availableActivePersons, i));
 
                 availableC = ProcessCommunitiesForYear(availableC, availableP, i);
+                AddHousesAndFlatsForYear(availableC, _earthAgeHelper.GetEarthAge(i), i);
             }
         }
 
@@ -121,9 +126,42 @@ namespace PopulationTreeTest
             return activeCommunities;
         }
 
-        private List<Flat> AddHousesAndFlatsForYear(List<Community> communities)
+        private List<Flat> AddHousesAndFlatsForYear(List<Community> communities, EarthAge age, int year)
         {
-            var communitiesWithoutHouse = communities.Where(c => c.Home == null);
+            List<Flat> returnList = new List<Flat>();
+            var communitiesWithoutHouse = communities.Where(c => c.Home == null).ToList();
+            if(communitiesWithoutHouse.Count() == 0)
+            {
+                return returnList;
+            }
+
+            var newHouse = new House { BuildYear = year, Epoch = age.Name, Floors = _rand.Next(1, age.MaxHouseFloors) };
+            _allHouses.Add(newHouse);
+            int flatCount = age.Name.Equals("StoneAge") ? 1 : newHouse.Floors * 2;
+            int flatsFilled = 0;
+            int floor = 1;
+            for (int i = 0; i<communitiesWithoutHouse.Count; i++)
+            {
+                if(flatsFilled == flatCount)
+                {
+                    newHouse = new House { BuildYear = year, Epoch = age.Name, Floors = _rand.Next(1, age.MaxHouseFloors) };
+                    _allHouses.Add(newHouse);
+                    flatCount = age.Name.Equals("StoneAge") ? 1 : newHouse.Floors * 2;
+                    flatsFilled = 0;
+                    floor = 1;
+                }
+
+                var newFlat = new Flat(newHouse, communitiesWithoutHouse[i].Adults[_rand.Next(0, 2)], floor, flatsFilled);
+                newHouse.Flats.Add(newFlat);
+                communitiesWithoutHouse[i].Home = newFlat;
+                returnList.Add(newFlat);
+
+                if(i%2 > 0)
+                {
+                    floor++;
+                }
+
+            }
             return new List<Flat>();
 
         }
