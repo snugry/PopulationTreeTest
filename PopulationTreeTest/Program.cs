@@ -50,6 +50,10 @@ for(int i = -10000; i < 4001; i+= 500)
             Console.WriteLine($"My family has {p.Family.Children.Count} children");
         }          
     }
+    if(p.Family != null && p.Family.Home != null)
+    {
+        Console.WriteLine($"I live in house number: {p.Family.Home.House.Id} on the {p.Family.Home.Floor} floor");
+    }
 }
 
 // Test Remove persons

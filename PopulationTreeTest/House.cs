@@ -8,6 +8,8 @@ namespace PopulationTreeTest
 {
     public class House
     {
+        //Change when using database
+        public static int globalHouseCounter = 0;
         public int Id { get; set; }
         public string Street { get; set; }
         public int HouseNumber { get; set; }
@@ -20,7 +22,7 @@ namespace PopulationTreeTest
 
         public House()
         {
-
+            Id = globalHouseCounter++;
         }
     }
 }
