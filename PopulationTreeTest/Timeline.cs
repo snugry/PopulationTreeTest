@@ -15,6 +15,10 @@ namespace PopulationTreeTest
         public List<Community> AllCommunities { get { return _allCommunities; } }
 
         private List<House> _allHouses;
+
+        private List<Flat> _allFlats;
+
+        private Dictionary<int, Dictionary<int, House>> _yearHouseMap;
         public List<House> AllHouses { get {  return _allHouses; } }
 
         private Dictionary<int, Disaster> _disasters;
@@ -44,6 +48,9 @@ namespace PopulationTreeTest
             _allPersons = new List<PersonData>();
             _allCommunities = new List<Community>();
             _allHouses = new List<House>();
+            _allFlats = new List<Flat>();
+            _yearHouseMap = new Dictionary<int, Dictionary<int, House>>();
+
             _startYear = startYear;
             _disasters = new Dictionary<int, Disaster>();
 
@@ -66,7 +73,7 @@ namespace PopulationTreeTest
         {
             List<PersonData> availableP = _allPersons;
             List<Community> availableC = _allCommunities;
-            for (int i = (int)startYear; i <= endYear; i += _INTERVAL)
+            for (int i = startYear; i <= endYear; i += _INTERVAL)
             {
                 if (movingIn)
                 {
@@ -82,7 +89,17 @@ namespace PopulationTreeTest
                 availableC.AddRange(CreateFamiliesForYear(availableActivePersons, i));
 
                 availableC = ProcessCommunitiesForYear(availableC, availableP, i);
-                AddHousesAndFlatsForYear(availableC, _earthAgeHelper.GetEarthAge(i), i);
+
+                _yearHouseMap[i] = new Dictionary<int, House>();
+                if(i > startYear)
+                {
+                    _yearHouseMap[i] = _yearHouseMap[i - 1].ToDictionary(e => e.Key, e => e.Value);
+
+                }
+
+                CheckFlatHeritance(i);
+
+                _allFlats.AddRange(AddHousesAndFlatsForYear(availableC, _earthAgeHelper.GetEarthAge(i), i));
             }
         }
 
@@ -126,43 +143,80 @@ namespace PopulationTreeTest
             return activeCommunities;
         }
 
+        private void CheckFlatHeritance(int year)
+        {
+            foreach (var flat in _allFlats.Where(f => f.House.DemolishedYear > year && f.House.BuildYear <= year))
+            {
+                if (flat.Owner != null && flat.Owner.Died)
+                {
+                    if (flat.Owner.Children != null && flat.Owner.Children.Count > 0)
+                    {
+                        PersonData newOwner = flat.Owner.Children[_rand.Next(0, flat.Owner.Children.Count)];
+                        flat.UpdateOwner(newOwner);
+                        newOwner.Family.Home = flat;
+                    }
+                    else
+                    {
+                        flat.UpdateOwner(null);
+                    }
+                }
+            }
+        }
+
         private List<Flat> AddHousesAndFlatsForYear(List<Community> communities, EarthAge age, int year)
         {
             List<Flat> returnList = new List<Flat>();
-            var communitiesWithoutHouse = communities.Where(c => c.Home == null).ToList();
+            var communitiesWithoutHouse = new Stack<Community>(communities.Where(c => c.Home == null));
             if(communitiesWithoutHouse.Count() == 0)
             {
                 return returnList;
             }
 
+            int flatNum = 0;
+            List<Community> commsToRemoveFromList = new List<Community>();
+            foreach(var flat in _allFlats.Where(f => f.House.DemolishedYear > year && f.House.BuildYear <= year && f.Owner == null))
+            {
+                if(communitiesWithoutHouse.Count > flatNum)
+                {
+                    Community comm = communitiesWithoutHouse.Pop();
+                    flat.UpdateOwner(comm.Adults[_rand.Next(0, 2)]);
+                    comm.Home = flat;
+                    flatNum++;
+                }
+            }
+
             var newHouse = new House { BuildYear = year, Epoch = age.Name, Floors = _rand.Next(1, age.MaxHouseFloors) };
+            newHouse.DemolishedYear = year + _rand.Next(100, 2000);
             _allHouses.Add(newHouse);
             int flatCount = age.Name.Equals("StoneAge") ? 1 : newHouse.Floors * 2;
             int flatsFilled = 0;
             int floor = 1;
-            for (int i = 0; i<communitiesWithoutHouse.Count; i++)
+            while (communitiesWithoutHouse.Count > 0)
             {
                 if(flatsFilled == flatCount)
                 {
                     newHouse = new House { BuildYear = year, Epoch = age.Name, Floors = _rand.Next(1, age.MaxHouseFloors) };
+                    newHouse.DemolishedYear = year + _rand.Next(100, 2000);
                     _allHouses.Add(newHouse);
                     flatCount = age.Name.Equals("StoneAge") ? 1 : newHouse.Floors * 2;
                     flatsFilled = 0;
                     floor = 1;
                 }
 
-                var newFlat = new Flat(newHouse, communitiesWithoutHouse[i].Adults[_rand.Next(0, 2)], floor, flatsFilled);
+                Community comm = communitiesWithoutHouse.Pop();
+                var newFlat = new Flat(newHouse, comm.Adults[_rand.Next(0, 2)], floor, flatsFilled);
                 newHouse.Flats.Add(newFlat);
-                communitiesWithoutHouse[i].Home = newFlat;
+                flatsFilled++;
+                comm.Home = newFlat;
                 returnList.Add(newFlat);
 
-                if(i%2 > 0)
+                if(flatsFilled%2 > 0)
                 {
                     floor++;
                 }
 
             }
-            return new List<Flat>();
+            return returnList;
 
         }
 

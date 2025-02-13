@@ -347,7 +347,7 @@
     "ImmigrationRate": 20,
     "ChildPropability": 0.5,
     "MaxChildNumber": 5,
-    "MaxHouseFloors": 7,
+    "MaxHouseFloors": 35,
     "PossibleJobs": [
       {
         "Name": "Lawyer",
@@ -410,7 +410,7 @@
     "ImmigrationRate": 20,
     "ChildPropability": 0.45,
     "MaxChildNumber": 3,
-    "MaxHouseFloors": 10,
+    "MaxHouseFloors": 50,
     "PossibleJobs": [
       {
         "Name": "Lawyer",

@@ -14,8 +14,8 @@ namespace PopulationTreeTest
         public int Floor { get; set; }
         public House House { get; private set; }
 
-        public Community OwnerCommunity { get; private set; }
-        public PersonData Owner { get; private set; }
+        public Community? OwnerCommunity { get; set; }
+        public PersonData? Owner { get; private set; }
 
         public Flat(House house,PersonData owner, int floor, int flatNumber)
         {
@@ -24,6 +24,19 @@ namespace PopulationTreeTest
             this.OwnerCommunity = owner.Family;
             Floor = floor;
             FlatNumber = flatNumber;
+        }
+
+        public void UpdateOwner ( PersonData? newOwner)
+        {
+            Owner = newOwner;
+            if(newOwner == null)
+            {
+                OwnerCommunity = null;
+            }
+            else
+            {
+                OwnerCommunity = newOwner.Family;
+            }
         }
     }
 }
