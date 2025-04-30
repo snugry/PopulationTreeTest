@@ -60,7 +60,7 @@ namespace PopulationTreeTest
             for (int i = 0; i < startPersons; i++)
             {
                 PersonData p = new PersonData(_nameGenerator, (Gender)(_rand.Next(0, 2)));
-                p.SetBirthDateRange(startYear, _YEAR_RANGE, _rand);
+                p.SetBirthDateRange(startYear, startYear + _YEAR_RANGE, _rand);
                 p.SetDeathDateRange(_MAX_AGE, _rand);
                 p.SetJob(_earthAgeHelper, _rand);
 
