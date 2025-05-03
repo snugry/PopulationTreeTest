@@ -4,7 +4,7 @@ using PopulationTreeTest.FileIO;
 
 Console.WriteLine("Hello, World!");
 
-Timeline timeline = new Timeline(25, -10000);
+Timeline timeline = new Timeline(15, -10000);
 
 timeline.AddDisaster(1352, 500, "The Great Fire");
 timeline.AddDisaster(1933, 1000, "The Great War");
@@ -30,6 +30,7 @@ for(int i = -10000; i < 4001; i+= 500)
     Console.WriteLine("Random person:");
     var p = persons[rand.Next(0, persons.Count)];
     Console.WriteLine($"Hi, I'm {p.Prename} {p.Surname} - born on {p.BirthDate}. My Job is {p.Job}");
+    Console.WriteLine($"I will die from {p.DeathReason} on {p.DeathDate}");
     if(p.Partner != null)
     {
         Console.WriteLine($"My Partner is {p.Partner.Prename} {p.Partner.Surname}");

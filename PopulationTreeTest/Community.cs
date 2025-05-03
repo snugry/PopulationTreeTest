@@ -36,7 +36,7 @@ namespace PopulationTreeTest
             Children = new List<PersonData>();
 
             CreateChildren(rand, nameGen, rand.Next((int)year - 15, (int)year + 2), earthAgeHelp);
-
+            Home = null;
         }
 
         private void SetCommunityName(Random rand)

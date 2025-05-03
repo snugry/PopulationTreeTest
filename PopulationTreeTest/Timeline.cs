@@ -149,10 +149,19 @@ namespace PopulationTreeTest
             {
                 if (flat.Owner != null && flat.Owner.Died)
                 {
-                    if (flat.Owner.Children != null && flat.Owner.Children.Count > 0)
+                    if(flat.Owner.Partner != null)
+                    {
+                        flat.UpdateOwner(flat.Owner.Partner);
+                    }
+                    else if (flat.Owner.Children != null && flat.Owner.Children.Count > 0)
                     {
                         PersonData newOwner = flat.Owner.Children[_rand.Next(0, flat.Owner.Children.Count)];
                         flat.UpdateOwner(newOwner);
+
+                        if(newOwner.Family.Home != null)
+                        {
+                            newOwner.Family.Home.UpdateOwner(null);
+                        }
                         newOwner.Family.Home = flat;
                     }
                     else

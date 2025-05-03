@@ -37,6 +37,12 @@ namespace PopulationTreeTest
 
         public Gender Gender { get; private set; }
 
+        private static string[] possibleDeathReasons = new string[] { "Car accident",
+                                                                      "Fire",
+                                                                      "Heart attack",
+                                                                      "Cancer",
+                                                                      "Accident"};
+
         public PersonData(NameGenerator nameGenerator, Gender gender) {
             Prename = nameGenerator.GeneratePrename(gender);
             Gender = gender;
@@ -77,26 +83,32 @@ namespace PopulationTreeTest
 
         public void SetDeathDateRange(int maxAge, Random rand)
         {
-            int ageSwitch = rand.Next(0,3);
+            int ageSwitch = rand.Next(0,4);
 
             int yearRange = 20;
             if(maxAge < 10)
             {
                 yearRange = maxAge;
             }
-            int year;
+            int age;
             if(ageSwitch == 0)
             {
-                year = rand.Next(BirthDate.Year, BirthDate.Year + maxAge + 1);
+                age = rand.Next(0, 15);
+            }
+            else if (ageSwitch == 1)
+            {
+                age = rand.Next(15, 45);
             }
             else
             {            
-                year = rand.Next(BirthDate.Year + maxAge - yearRange, BirthDate.Year + maxAge + 1);
+                age = rand.Next(45, maxAge + 1);
             }
+            int year = BirthDate.Year + age;
             int month = rand.Next(1, 13);
             int day = rand.Next(1, LongDateTime.GetDaysInMonth(month, year) + 1);
 
             DeathDate = new LongDateTime(year, month, day);
+            DeathReason = GetDeathReason(rand, age);
         }
 
         public int GetAge(long year)
@@ -118,6 +130,15 @@ namespace PopulationTreeTest
                 tempJob = possibleJobs[rand.Next(0, possibleJobs.Count)];
             }
             this.Job = tempJob.Name;
+        }
+
+        private string GetDeathReason(Random rand, int age)
+        {
+            if(age > 65 && rand.Next(0,2) != 0)
+            {
+                return "Decay";
+            }
+            return possibleDeathReasons[rand.Next(0, possibleDeathReasons.Count())];
         }
 
         public override string ToString()
